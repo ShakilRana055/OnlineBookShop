@@ -9,12 +9,13 @@
             $Email = $_POST['Email'];
             $Phone = $_POST['Phone'];
             $Address = $_POST['Address'];
-            $UserType = "Supplier";
+            $CompanyName = $_POST['CompanyName'];
+            $Designation = $_POST['Designation'];
 
             $PhotoUrl = '';
 
-            $sql = "INSERT INTO `users`(`Name`, `Email`, `Phone`, `Address`,`PhotoUrl`, `UserType`, `CreatedDate`) 
-                    VALUES ('$Name','$Email','$Phone','$Address','$PhotoUrl','$UserType','$currentDate',)";
+            $sql = "INSERT INTO `supplier`(`Name`, `Email`, `Phone`, `Address`,`PhotoUrl`,`CompanyName`, `Designation`, `CreatedDate`) 
+                    VALUES ('$Name','$Email','$Phone','$Address','$PhotoUrl', '$CompanyName','$Designation','$currentDate')";
             
             //$image = time().trim( $_FILES['image']['name'] );
             //$target = "image/".basename($image);
@@ -23,14 +24,14 @@
 
             $result = mysqli_query($con , $sql);
             if($result != null){
-                echo true;
+                echo json_encode(true);
             }
             else{
-                echo false;
+                echo json_encode(false);
             }
         } 
         catch (Throwable $th) {
-            echo false;
+            echo json_encode($th);
         }
         
     }

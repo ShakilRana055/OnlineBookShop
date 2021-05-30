@@ -80,6 +80,7 @@
     <script src="../public/layout/assets/plugins/block-ui/block-UI.js"></script>
     <script src="../public/layout/assets/plugins/chartjs/chart.min.js"></script>
     <script src="../public/layout/Pages/Print.js"></script>
+    <script src = "../../ajax-library/AjaxOperation.js"></script>
 </body>
 </html>
 
