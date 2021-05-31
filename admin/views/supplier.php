@@ -1,7 +1,11 @@
 <?php 
     include("layout/topbar.php");
     include("layout/sidebar.php");
+    $sql = "SELECT * FROM `supplier` ORDER BY `Id` DESC";
+    $supplierList = mysqli_query($con, $sql);
 ?>
+
+
 
 <div class="row">
     <div class="col-md-6">
@@ -76,12 +80,18 @@
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Address</th>
-                            <th>Photo</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        <?php
+                            while($row = mysqli_fetch_array($supplierList)){
+                                echo "<tr>
+                                        <td>".$row['Name']."</td>
+                                        <td>".$row['Phone']."<br>".$row['Email']."</td>
+                                        <td>".$row['Address']."</td>
+                                </tr>";
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -96,6 +106,8 @@
     let selector = {
         supplierCreateForm : $("#supplierCreateForm"),
         supplierCreateBtn : $("#supplierCreateBtn"),
+        supplierList: $("#supplierList"),
+        tableInformation: '',
     };
 
     class CRUDOperation{
@@ -119,5 +131,9 @@
     selector.supplierCreateBtn.click(function(){
         process.Save();
     });
+
+    window.onload = function(){
+        selector.supplierList.DataTable();
+    };
 
 </script>

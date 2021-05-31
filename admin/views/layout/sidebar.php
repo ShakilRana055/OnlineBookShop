@@ -67,7 +67,7 @@
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="User" asp-action="Supplier">Supplier</a></li>
+                                    <li><a href = "supplier.php">Supplier</a></li>
                                     <li><a asp-controller="User" asp-action="Customer">Customer</a></li>
                                     <li><a asp-controller="User" asp-action="AdminAccount">Admin Account</a></li>
                                 </ul>

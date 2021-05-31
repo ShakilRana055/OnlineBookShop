@@ -1,3 +1,4 @@
+<?php include("../../connection/DatabaseConnection.php")?>
 <!DOCTYPE html>
 <html>
 <head>
