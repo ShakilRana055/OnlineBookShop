@@ -5,7 +5,18 @@
     $supplierList = mysqli_query($con, $sql);
 ?>
 
+<style>
+    .odd {
+        background-color: #99ff99;
+    }
 
+    .even {
+        background-color: #aa80ff;
+    }
+    .custom{
+        text-align: center;
+    }
+</style>
 
 <div class="row">
     <div class="col-md-6">
@@ -40,11 +51,11 @@
                                     <textarea class="form-control" name = "Address" id="Address" cols="3"></textarea>
                                     <span asp-validation-for="Address" class="text-danger"></span>
                                 </div>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for = "Photo" class="control-label">Photo</label>
                                     <input type = "file" name = "Photo" id = "Photo" style="border:none;" class="form-control" />
                                     <span asp-validation-for="Photo" class="text-danger"></span>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label for="CompanyName" class="control-label">Company Name</label>
                                     <input name="CompanyName" id = "CompanyName" class="form-control" />
@@ -80,18 +91,11 @@
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Address</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            while($row = mysqli_fetch_array($supplierList)){
-                                echo "<tr>
-                                        <td>".$row['Name']."</td>
-                                        <td>".$row['Phone']."<br>".$row['Email']."</td>
-                                        <td>".$row['Address']."</td>
-                                </tr>";
-                            }
-                        ?>
+                        
                     </tbody>
                 </table>
             </div>
@@ -108,11 +112,20 @@
         supplierCreateBtn : $("#supplierCreateBtn"),
         supplierList: $("#supplierList"),
         tableInformation: '',
+        name: $("#Name"),
+        phone: $("#Phone"),
+        email: $("#Email"),
+        address: $("#Address"),
+        companyName: $("#CompanyName"),
+        designation: $("#Designation"),
+        edit: ".editSupplierInformation",
+        delete: ".deleteSupplierInformation",
+        id : '',
     };
 
     class CRUDOperation{
         Save(){
-            var formData = new FormData(selector.supplierCreateForm[0]);
+            let formData = new FormData(selector.supplierCreateForm[0]);
             formData.append("save", "save");
             let response = ajaxOperation.SaveAjax("../controller/Supplier.php", formData);
             
@@ -124,16 +137,129 @@
                 toastr.error("Something went wrong", "Error");
             }
         }
+        Update(id){
+            let formData = new FormData(selector.supplierCreateForm[0]);
+            formData.append("Id", id);
+            formData.append("Update", "Update");
+            let response = ajaxOperation.SaveAjax("../controller/Supplier.php", formData);
+            if(JSON.parse(response) === true){
+                toastr.success("Successfully Updated Supplier!", "Success");
+                selector.supplierCreateForm[0].reset();
+            }
+            else{
+                toastr.error("Something went wrong", "Error");
+            }
+        }
+        Delete(id){
+            let response = ajaxOperation.GetAjaxByValue("../controller/Supplier.php", id);
+            if(JSON.parse(response) === true){
+                toastr.success("Successfully Deleted Supplier!", "Success");
+                selector.supplierCreateForm[0].reset();
+            }
+            else{
+                toastr.error("Something went wrong", "Error");
+            }
+        }
+    }
+
+    function GenerateTable(){
+        var supplierList = selector.supplierList.dataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "pageLength": 10,
+                "autoWidth": false,
+                "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
+                "order": [[0, "desc"]],
+                    "ajax": {
+                        "url": "../controller/SupplierList.php",
+                        "type": "POST",
+                        "data": function (data) {
+
+                        },
+                        "complete": function (json) {
+
+                        }
+                    },
+                    "columnDefs": [
+                        { "className": "custom", "targets": [0, 1, 2, 3] },
+                    ],
+                    "columns": [
+                        { "data": "Name", "name": "Name", "autowidth": true, "orderable": true },
+                        {
+                            "render": function (data, type, full, meta) {
+                                return `${full.Phone} <br/> ${full.Email}`;
+                            }
+                        },
+                        { "data": "Address", "name": "Address", "autowidth": true, "orderable": true },
+                        {
+                            "render": function (data, type, full, meta) {
+                                return `
+                                <div class="btn-group">
+                                    <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                  <div class="dropdown-menu" >
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editSupplierInformation" 
+                                        name = "${full.Name}" phone = "${full.Phone}" email = "${full.Email}" address = "${full.Address}"
+                                        companyName = "${full.CompanyName}" designation = "${full.Designation}" id = "${full.Id}"
+                                    ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</button >
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deleteSupplierInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
+                                  </div>
+                                </div>`;
+                            }
+                        },
+                    ]
+                });
+                selector.tableInformation = supplierList;
     }
 
     let process = new CRUDOperation();
 
     selector.supplierCreateBtn.click(function(){
-        process.Save();
+        if($(this).text() === "Save"){ 
+            process.Save();
+        }
+        else{
+            process.Update(selector.id);
+            $(this).text("Save");
+        }
+        selector.tableInformation.fnFilter();
+    });
+
+    $(document).on("click", selector.edit, function(){
+        selector.name.val($(this).attr("name"));
+        selector.phone.val($(this).attr("phone"));
+        selector.email.val($(this).attr("email"));
+        selector.address.val($(this).attr("address"));
+        selector.companyName.val($(this).attr("companyName"));
+        selector.designation.val($(this).attr("designation"));
+        selector.id = $(this).attr("id");
+        selector.supplierCreateBtn.text("Update");
+    });
+
+    $(document).on("click", selector.delete, function(){
+        Swal.fire({
+                    title: 'Are You Sure to Delete?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes',
+                    showConfirmButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+
+                }).then((result) => {
+                    if (result.value) {
+                        process.Delete($(this).attr("id"));
+                        selector.tableInformation.fnFilter();
+                    }
+                });
+        
     });
 
     window.onload = function(){
-        selector.supplierList.DataTable();
+        GenerateTable();
     };
 
 </script>
