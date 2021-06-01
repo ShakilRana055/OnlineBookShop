@@ -33,38 +33,34 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for = "Name" class="control-label">Name</label>
-                                    <input name = "Name" id = "Name" class="form-control" />
-                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                    <input name = "Name" id = "Name" required class="form-control" />
+                                    <span validation-for="Name" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label name = "Phone" class="control-label">Phone</label>
-                                    <input name = "Phone" id = "Phone" class="form-control" />
-                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                    <input type = "number" required name = "Phone" id = "Phone" class="form-control" />
+                                    <span validation-for="Phone" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label name = "Email" class="control-label"> Email</label>
-                                    <input name = "Email" id = "Email" class="form-control" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <input type = "email" name = "Email" id = "Email" class="form-control" />
+                                    <span validation-for="Email" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for="Address" class="control-label">Address</label>
                                     <textarea class="form-control" name = "Address" id="Address" cols="3"></textarea>
-                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                    <span validation-for="Address" class="text-danger"></span>
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label for = "Photo" class="control-label">Photo</label>
-                                    <input type = "file" name = "Photo" id = "Photo" style="border:none;" class="form-control" />
-                                    <span asp-validation-for="Photo" class="text-danger"></span>
-                                </div> -->
+
                                 <div class="form-group">
                                     <label for="CompanyName" class="control-label">Company Name</label>
                                     <input name="CompanyName" id = "CompanyName" class="form-control" />
-                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                    <span validation-for="CompanyName" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label for = "Designation" class="control-label">Designation</label>
                                     <input name = "Designation" id = "Designation" class="form-control" />
-                                    <span asp-validation-for="Designation" class="text-danger"></span>
+                                    <span validation-for="Designation" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -162,12 +158,35 @@
         }
     }
 
+    let validator = selector.supplierCreateForm.validate({
+                rules: {
+                    Name: {
+                        required: true,
+                    },
+                    Phone: {
+                        required: true,
+                    },
+                    Address: {
+                        required: true,
+                    },
+                },
+                // Specify validation error messages
+                messages: {
+                    Name: "Name Field is required",
+                    Phone: "Phone Field is required",
+                    Address: "Address Field is required",
+                },
+                submitHandler: function (form) {
+
+                }
+            });
+
     function GenerateTable(){
         var supplierList = selector.supplierList.dataTable({
                 "processing": true,
                 "serverSide": true,
                 "filter": true,
-                "pageLength": 10,
+                "pageLength": 6,
                 "autoWidth": false,
                 "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
                 "order": [[0, "desc"]],
@@ -215,10 +234,10 @@
     let process = new CRUDOperation();
 
     selector.supplierCreateBtn.click(function(){
-        if($(this).text() === "Save"){ 
+        if($(this).text() === "Save" && selector.supplierCreateForm.valid()){ 
             process.Save();
         }
-        else{
+        else if($(this).text() === "Updated" && selector.supplierCreateForm.valid()){
             process.Update(selector.id);
             $(this).text("Save");
         }
