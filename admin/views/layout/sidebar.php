@@ -68,8 +68,8 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "supplier.php">Supplier</a></li>
-                                    <li><a asp-controller="User" asp-action="Customer">Customer</a></li>
-                                    <li><a asp-controller="User" asp-action="AdminAccount">Admin Account</a></li>
+                                    <li><a href = "#">Customer</a></li>
+                                    <li><a href = "adminAccount.php">Admin Account</a></li>
                                 </ul>
                             </li>
                         </ul>

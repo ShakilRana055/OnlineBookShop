@@ -1,3 +1,4 @@
+<?php session_start();?>
 <?php include("../../connection/DatabaseConnection.php")?>
 <!DOCTYPE html>
 <html>
@@ -104,8 +105,8 @@
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button"
                        aria-haspopup="false" aria-expanded="false">
-                        <img id="userImage" src="../public/layout/images/superadmin.jpg" alt="profile-user" class="rounded-circle" />
-                        <span class="ml-1 nav-user-name hidden-sm" id="userName"> Admin<i class="mdi mdi-chevron-down"></i> </span>
+                        <img id="userImage" src="<?php echo $_SESSION['user']['PhotoUrl'];?>" alt="profile-user" class="rounded-circle" />
+                        <span class="ml-1 nav-user-name hidden-sm" id="userName"> <?php echo $_SESSION['user']['Name'];?><i class="mdi mdi-chevron-down"></i> </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         

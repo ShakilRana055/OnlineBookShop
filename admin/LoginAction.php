@@ -37,7 +37,7 @@ function CreatingUser($con){
 		$currentDate = date('Y-m-d H:s:i');
 
 		$sql = "INSERT INTO `users`(`Name`, `Email`, `Password`, `PhotoUrl`, `UserType`, `CreatedDate`) 
-				VALUES ('Super Admin', 'superadmin@gmail.com', '$superAdminPassword', '/image/superadmin.jpg', 'SuperAdmin', '$currentDate')";
+				VALUES ('Super Admin', 'superadmin@gmail.com', '$superAdminPassword', '../public/layout/images/superadmin.jpg', 'SuperAdmin', '$currentDate')";
 		$result = mysqli_query($con, $sql);
 	}
 }
