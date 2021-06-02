@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 01, 2021 at 03:24 AM
+-- Generation Time: Jun 02, 2021 at 01:39 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -25,13 +25,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `brand`
+-- Table structure for table `authors`
 --
 
-CREATE TABLE `brand` (
+CREATE TABLE `authors` (
+  `Id` int(11) NOT NULL,
+  `Name` varchar(60) DEFAULT NULL,
+  `CreatedDate` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `authors`
+--
+
+INSERT INTO `authors` (`Id`, `Name`, `CreatedDate`) VALUES
+(1, 'Md Shakil Rana', '2021-06-02 17:58:01'),
+(2, 'Sumaiya Konica ', '2021-06-02 17:35:18'),
+(3, 'Prisila Punom', '2021-06-02 17:52:19'),
+(5, 'Test', '2021-06-02 17:40:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `books`
+--
+
+CREATE TABLE `books` (
   `Id` int(11) NOT NULL,
   `Name` varchar(255) DEFAULT NULL,
+  `WarningQuantity` float DEFAULT NULL,
   `PhotoUrl` varchar(255) DEFAULT NULL,
+  `Description` varchar(255) DEFAULT NULL,
+  `AuthorId` int(11) DEFAULT NULL,
+  `CategoryId` int(11) DEFAULT NULL,
+  `SubCategoryId` int(11) DEFAULT NULL,
+  `PublicationId` int(11) DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -91,7 +119,7 @@ CREATE TABLE `invoice` (
 CREATE TABLE `invoicedetail` (
   `Id` int(11) NOT NULL,
   `InvoiceId` int(11) DEFAULT NULL,
-  `ProductId` int(11) DEFAULT NULL,
+  `BookId` int(11) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
   `UnitPrice` float DEFAULT NULL,
   `SellTax` float DEFAULT NULL,
@@ -102,18 +130,13 @@ CREATE TABLE `invoicedetail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Table structure for table `publications`
 --
 
-CREATE TABLE `product` (
+CREATE TABLE `publications` (
   `Id` int(11) NOT NULL,
-  `Name` varchar(255) DEFAULT NULL,
-  `WarningQuantity` float DEFAULT NULL,
-  `PhotoUrl` varchar(255) DEFAULT NULL,
-  `Description` varchar(255) DEFAULT NULL,
-  `BrandId` int(11) DEFAULT NULL,
-  `CategoryId` int(11) DEFAULT NULL,
-  `SubCategoryId` int(11) DEFAULT NULL,
+  `Name` varchar(60) DEFAULT NULL,
+  `Remarks` varchar(100) DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -126,7 +149,7 @@ CREATE TABLE `product` (
 CREATE TABLE `purchase` (
   `Id` int(11) NOT NULL,
   `InvoiceNumber` varchar(50) DEFAULT NULL,
-  `UserId` int(11) DEFAULT NULL,
+  `SupplierId` int(11) DEFAULT NULL,
   `PurchaseDate` datetime DEFAULT NULL,
   `GrandTotal` float DEFAULT NULL,
   `SubTotal` float DEFAULT NULL,
@@ -145,7 +168,7 @@ CREATE TABLE `purchase` (
 CREATE TABLE `purchasedetail` (
   `Id` int(11) NOT NULL,
   `PurchaseId` int(11) DEFAULT NULL,
-  `ProductId` int(11) DEFAULT NULL,
+  `BookId` int(11) DEFAULT NULL,
   `Quantity` int(11) DEFAULT NULL,
   `PurchaseUnitPrice` float DEFAULT NULL,
   `SellUnitPrice` float DEFAULT NULL,
@@ -177,7 +200,7 @@ CREATE TABLE `shipment` (
 
 CREATE TABLE `stock` (
   `Id` int(11) NOT NULL,
-  `ProductId` int(11) DEFAULT NULL,
+  `BookId` int(11) DEFAULT NULL,
   `Quantity` float DEFAULT NULL,
   `UnitPrice` float DEFAULT NULL,
   `UpdatedDate` datetime DEFAULT NULL
@@ -223,7 +246,9 @@ INSERT INTO `supplier` (`Id`, `Name`, `Phone`, `Email`, `Address`, `PhotoUrl`, `
 (4, 'dataTable', '013434', 'datatable@gmail.com', 'adsdsds', '', 'dsfdf', 'dsfdsf', '2021-05-31 20:49:19'),
 (5, 'knka freeze', '3454', 'konka@gmail.com', 'Manikgonj', '', 'some', 'Engineer', '2021-05-31 21:43:28'),
 (7, 'sajib', '4353', 'safdsf', 'afdfdsf', '', 'dsfdsf', 'dsfdsfdsf', '2021-05-31 21:53:58'),
-(11, 'validation', '32343', '', 'some address', '', '', '', '2021-06-01 07:06:21');
+(11, 'validation', '32343', 'email@gmail.com', 'some address', '', '', '', '2021-06-01 07:06:21'),
+(13, 'fdsfdsf', '323434', 'sfdsf@gmail.com', 'sdfdf', '', 'dsfdsf', 'dsfdfdsf', '2021-06-01 07:41:29'),
+(14, 'dfdsgdg', '', 'fgfhfh@gmail.com', '', '', '', '', '2021-06-01 19:17:58');
 
 -- --------------------------------------------------------
 
@@ -249,19 +274,27 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Id`, `Name`, `Email`, `Phone`, `Address`, `OutsideCity`, `Password`, `PhotoUrl`, `UserType`, `CreatedDate`) VALUES
-(1, 'Super Admin', 'superadmin@gmail.com', NULL, NULL, NULL, 'b715f831f1fee468d6b1760226035b29', '/image/superadmin.jpg', 'SuperAdmin', '2021-05-29 14:01:13'),
-(6, 'Name', 'email@email.com', 'phone', 'address', NULL, NULL, '', 'Supplier', '2021-05-30 07:07:18'),
-(7, 'Shakil', 'shakil@gmail.com', '04354', 'Kaliakoir', NULL, NULL, '', 'Supplier', '2021-05-30 07:21:26'),
-(8, 'skl', 'dgfdg@gmail.com', '3534346', 'address', NULL, NULL, '', 'Supplier', '2021-05-30 07:45:28');
+(1, 'Super Admin', 'superadmin@gmail.com', '123', 'Kaliakoir', NULL, 'b715f831f1fee468d6b1760226035b29', '../public/layout/images/superadmin.jpg', 'SuperAdmin', '2021-05-29 14:01:13'),
+(15, 'public', 'public@gmail.com', '123445456', 'some address', NULL, '202cb962ac59075b964b07152d234b70', '../public/image/1622624336admin.png', 'Admin', '2021-06-02 06:29:25'),
+(16, 'without photo', 'whitout@gmail.com', '123', '123', NULL, '202cb962ac59075b964b07152d234b70', '', 'Admin', '2021-06-02 06:07:32'),
+(17, 'Shakil Rana', 'skl@gmail.com', '435435', 'kaliakoir', NULL, '202cb962ac59075b964b07152d234b70', '../public/image/1622623459admin.png', 'Admin', '2021-06-02 14:19:44'),
+(19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `brand`
+-- Indexes for table `authors`
 --
-ALTER TABLE `brand`
+ALTER TABLE `authors`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Name` (`Name`);
+
+--
+-- Indexes for table `books`
+--
+ALTER TABLE `books`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -289,10 +322,11 @@ ALTER TABLE `invoicedetail`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indexes for table `product`
+-- Indexes for table `publications`
 --
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`Id`);
+ALTER TABLE `publications`
+  ADD PRIMARY KEY (`Id`),
+  ADD UNIQUE KEY `Name` (`Name`);
 
 --
 -- Indexes for table `purchase`
@@ -343,9 +377,15 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `brand`
+-- AUTO_INCREMENT for table `authors`
 --
-ALTER TABLE `brand`
+ALTER TABLE `authors`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `books`
+--
+ALTER TABLE `books`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -373,9 +413,9 @@ ALTER TABLE `invoicedetail`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `product`
+-- AUTO_INCREMENT for table `publications`
 --
-ALTER TABLE `product`
+ALTER TABLE `publications`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -412,13 +452,13 @@ ALTER TABLE `subcategory`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

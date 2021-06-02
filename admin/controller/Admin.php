@@ -85,7 +85,7 @@
         try 
         {
             $id = $_GET['search'];
-            $sql = "DELETE FROM `supplier` WHERE `Id` = '$id'";
+            $sql = "DELETE FROM `users` WHERE `Id` = '$id'";
             $result = mysqli_query($con, $sql);
             if($result != null){
                 echo json_encode(true);

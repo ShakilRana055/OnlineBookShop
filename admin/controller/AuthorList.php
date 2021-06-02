@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("../../connection/DatabaseConnection.php");
  $params = $columns = $totalRecords = $data = array();
  
@@ -7,22 +6,17 @@ include("../../connection/DatabaseConnection.php");
  
  $columns = array(
     0 => 'Name',
-    1 => 'Email',
-    2 => 'CreatedDate',
-    3 => 'Id' 
+    1 => 'Id',
  );
  
  $where_condition = $sqlTot = $sqlRec = "";
  
  if( !empty($params['search']['value']) ) {
     $where_condition .= " WHERE ";
-    $where_condition .= " ( Name LIKE '%".$params['search']['value']."%' ";    
-    $where_condition .= " OR Phone LIKE '%".$params['search']['value']."%' ";
-    $where_condition .= " OR Email LIKE '%".$params['search']['value']."%' ";
-    $where_condition .= " OR Address LIKE '%".$params['search']['value']."%' )";
+    $where_condition .= " ( Name LIKE '%".$params['search']['value']."%' )";    
  }
  
- $sql_query = "SELECT * FROM `users`";
+ $sql_query = "SELECT * FROM `authors`";
  $sqlTot .= $sql_query;
  $sqlRec .= $sql_query;
  
@@ -39,11 +33,8 @@ include("../../connection/DatabaseConnection.php");
  $totalRecords = mysqli_num_rows($queryTot);
  
  $queryRecords = mysqli_query($con, $sqlRec) or die("Error to Get the Post details.");
-    
-    $userType = array( "LoggedUserType" => $_SESSION['user']['UserType']);
-
-    while( $row = mysqli_fetch_assoc($queryRecords) ) { 
-        $row[] = $userType;
+ 
+    while( $row = mysqli_fetch_array($queryRecords) ) { 
         $data[] = $row;
     } 
  $json_data = array(

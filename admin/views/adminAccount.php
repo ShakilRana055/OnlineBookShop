@@ -91,7 +91,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Contact</th>
-                            <th>Address</th>
+                            <th>Photo</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -111,6 +111,7 @@
     let selector = {
         adminCreateForm : $("#adminCreateForm"),
         adminCreateBtn : $("#adminCreateBtn"),
+        adminResetBtn: $("#adminResetBtn"),
         adminList: $("#adminList"),
         tableInformation: '',
         name: $("#Name"),
@@ -156,16 +157,18 @@
             if(JSON.parse(response) === true){
                 toastr.success("Successfully Updated Admin!", "Success");
                 selector.adminCreateForm[0].reset();
+                selector.email.attr("readonly", false);
+                selector.password.attr("readonly", false);
+                selector.confirmPassword.attr("readonly", false);
             }
             else{
                 toastr.error("Duplicate Phone Number", "Error");
             }
         }
         Delete(id){
-            let response = ajaxOperation.GetAjaxByValue("../controller/Supplier.php", id);
+            let response = ajaxOperation.GetAjaxByValue("../controller/Admin.php", id);
             if(JSON.parse(response) === true){
-                toastr.success("Successfully Deleted Supplier!", "Success");
-                selector.adminCreateForm[0].reset();
+                toastr.success("Successfully Deleted Admin!", "Success");
             }
             else{
                 toastr.error("Something went wrong", "Error");
@@ -199,6 +202,7 @@
                 }
             });
 
+    
     function GenerateTable(){
         var adminList = selector.adminList.dataTable({
                 "processing": true,
@@ -225,10 +229,14 @@
                         { "data": "Name", "name": "Name", "autowidth": true, "orderable": true },
                         {
                             "render": function (data, type, full, meta) {
-                                return `${full.Phone} <br/> ${full.Email}`;
+                                return `${full.Phone} <br/> ${full.Email} <br/> ${full.Address}`;
                             }
                         },
-                        { "data": "Address", "name": "Address", "autowidth": true, "orderable": true },
+                        {
+                            "render": function (data, type, full, meta) {
+                                return `<img src = "${full.PhotoUrl}" height = "50" width = "50" alt = "No" />`;
+                            }
+                        },
                         {
                             "render": function (data, type, full, meta) {
                                 if(full[0].LoggedUserType === "Admin"){
@@ -243,6 +251,18 @@
                                     }
                                 }
                                 else{
+                                    if(full.Email === "superadmin@gmail.com"){
+                                        return `
+                                        <div class="btn-group">
+                                            <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                        <div class="dropdown-menu" >
+                                            <button style="font-size: inherit;" class="dropdown-item btn-rx editSupplierInformation" 
+                                                name = "${full.Name}" phone = "${full.Phone}" email = "${full.Email}" address = "${full.Address}"
+                                                id = "${full.Id}"
+                                            ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</button >
+                                            </div>
+                                        </div>`;
+                                    }
                                     return `
                                         <div class="btn-group">
                                             <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
@@ -273,7 +293,7 @@
         if($(this).text() === "Save" && selector.adminCreateForm.valid() && PasswordMatch() === true){ 
             process.Save();
         }
-        else if($(this).text() === "Update" && selector.adminCreateForm.valid()){
+        else if($(this).text() === "Update"){
             process.Update(selector.id);
             $(this).text("Save");
         }
@@ -285,10 +305,11 @@
         selector.phone.val($(this).attr("phone"));
         selector.email.val($(this).attr("email"));
         selector.address.val($(this).attr("address"));
-        selector.companyName.val($(this).attr("companyName"));
-        selector.designation.val($(this).attr("designation"));
         selector.id = $(this).attr("id");
         selector.adminCreateBtn.text("Update");
+        selector.email.attr("readonly", true);
+        selector.password.attr("readonly", true);
+        selector.confirmPassword.attr("readonly", true);
     });
 
     $(document).on("click", selector.delete, function(){
@@ -330,4 +351,11 @@
     }
     selector.password.keyup(PasswordMatch);
     selector.confirmPassword.keyup(PasswordMatch);
+    
+    selector.adminResetBtn.click(function(){
+        selector.email.attr("readonly", false);
+        selector.password.attr("readonly", false);
+        selector.confirmPassword.attr("readonly", false);
+        selector.adminCreateBtn.text("Save");
+    });
 </script>

@@ -10,8 +10,8 @@
                     <a href="#menuUsers" class="nav-link" data-toggle="tooltip-custom" data-placement="top" title="" data-original-title="Users">
                         <i class="fas fa-user-tie"></i>
                     </a>
-                    <a href="#ProductAttributes" class="nav-link" data-toggle="tooltip-custom" data-placement="top" title=""
-                       data-original-title="Product Attributes">
+                    <a href="#generalSetup" class="nav-link" data-toggle="tooltip-custom" data-placement="top" title=""
+                       data-original-title="Book Attributes">
                         <i class="fab fa-connectdevelop"></i>
                     </a>
                     <a href="#inventoryManagement" class="nav-link" data-toggle="tooltip-custom" data-placement="top" title=""
@@ -74,23 +74,22 @@
                             </li>
                         </ul>
                     </div>
-                    <div id="ProductAttributes" class="main-icon-menu-pane">
+                    <div id="generalSetup" class="main-icon-menu-pane">
                         <div class="title-box">
-                            <h6 class="menu-title">Product Attributes</h6>
+                            <h6 class="menu-title">Book Attributes</h6>
                         </div>
                         <ul class="nav metismenu" id="main_menu_side_nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
-                                    <i class="dripicons-document"></i><span class="w-100">Product Attributes</span>
+                                    <i class="dripicons-document"></i><span class="w-100">Book Attributes</span>
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="Brand" asp-action="Index">Brand</a></li>
-                                    <li><a asp-controller="Category" asp-action="Index">Category</a></li>
-                                    <li><a asp-controller="VatAndTax" asp-action="Index">Vat & Tax</a></li>
-                                    <li><a asp-controller="Unit" asp-action="Index">Unit</a></li>
-                                    <li><a asp-controller="Product" asp-action="Index">Add Product</a></li>
-                                    <li><a asp-controller="Product" asp-action="ProductListView">Product List</a></li>
+                                    <li><a href = "author.php">Author & Publication</a></li>
+                                    <li><a href = "#">Category</a></li>
+                                    <li><a href = "#">Sub-Category</a></li>
+                                    <li><a href = "#">Add Book</a></li>
+                                    <li><a href = "#">Book List</a></li>
                                 </ul>
                             </li>
                         </ul>
