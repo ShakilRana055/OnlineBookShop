@@ -86,8 +86,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "author.php">Author & Publication</a></li>
-                                    <li><a href = "#">Category</a></li>
-                                    <li><a href = "#">Sub-Category</a></li>
+                                    <li><a href = "category.php">Category & Sub-Category</a></li>
                                     <li><a href = "#">Add Book</a></li>
                                     <li><a href = "#">Book List</a></li>
                                 </ul>

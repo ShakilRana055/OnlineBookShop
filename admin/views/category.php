@@ -21,11 +21,11 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form id="authorCreateForm" enctype="multipart/form-data">
+        <form id="categoryCreateForm" enctype="multipart/form-data">
             <div class="card">
                 <div id="headingOne" class="card-header bg-blue1">
                     <button type="button" data-toggle="collapse" data-target="#Collapse" aria-expanded="true" class="text-left m-0 p-0 btn btn-block" style="box-shadow: none;">
-                        <h5 class="m-0 p-0" style="color: #fff;">Add Author</h5>
+                        <h5 class="m-0 p-0" style="color: #fff;">Add Category</h5>
                     </button>
                 </div>
                 <div class="card-body">
@@ -41,19 +41,19 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" id="authorResetBtn">Reset</button>
-                        <button type="button" id="authorCreateBtn" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-secondary" id="categoryResetBtn">Reset</button>
+                        <button type="button" id="categoryCreateBtn" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
     <div class="col-md-6">
-    <form id="publicationCreateForm" enctype="multipart/form-data">
+    <form id="subCategoryCreateForm" enctype="multipart/form-data">
             <div class="card">
                 <div id="headingOne" class="card-header bg-blue1">
                     <button type="button" data-toggle="collapse" data-target="#Collapse1" aria-expanded="true" class="text-left m-0 p-0 btn btn-block" style="box-shadow: none;">
-                        <h5 class="m-0 p-0" style="color: #fff;">Add Publication</h5>
+                        <h5 class="m-0 p-0" style="color: #fff;">Add Sub-Category</h5>
                     </button>
                 </div>
                 <div class="card-body">
@@ -61,16 +61,16 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for = "publicationName" class="control-label">Name</label>
-                                    <input name = "Name" id = "publicationName" required class="form-control" />
-                                    <span validation-for="publicationName" class="text-danger"></span>
+                                    <label for = "subCategoryName" class="control-label">Name</label>
+                                    <input name = "Name" id = "subCategoryName" required class="form-control" />
+                                    <span validation-for="subCategoryName" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" id="publicationResetBtn">Reset</button>
-                        <button type="button" id="publicationCreateBtn" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-secondary" id="subCategoryResetBtn">Reset</button>
+                        <button type="button" id="subCategoryCreateBtn" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
@@ -83,11 +83,11 @@
         <div class="card">
             <div id="headingTwo" class="card-header bg-blue1">
                 <button type="button" data-toggle="collapse" data-target="#" aria-expanded="true" class="text-left m-0 p-0 btn btn-block" style="box-shadow: none;">
-                    <h5 class="m-0 p-0" style="color: #fff;">Author List</h5>
+                    <h5 class="m-0 p-0" style="color: #fff;">Category List</h5>
                 </button>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-hover table-bordered" id="authorList" >
+                <table class="table table-hover table-bordered" id="categoryList" >
                     <thead style = "background-color: #ffd9b3;"> 
                         <tr>
                             <th>Name</th>
@@ -105,11 +105,11 @@
         <div class="card">
             <div id="headingTwo" class="card-header bg-blue1">
                 <button type="button" data-toggle="collapse" data-target="#" aria-expanded="true" class="text-left m-0 p-0 btn btn-block" style="box-shadow: none;">
-                    <h5 class="m-0 p-0" style="color: #fff;">Publication List</h5>
+                    <h5 class="m-0 p-0" style="color: #fff;">Sub-Category List</h5>
                 </button>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-hover table-bordered" id="publicationList" >
+                <table class="table table-hover table-bordered" id="subCategoryList" >
                     <thead style = "background-color: #ffd9b3;"> 
                         <tr>
                             <th>Name</th>
@@ -131,57 +131,57 @@
 (function(){
     let ajaxOperation = new AjaxOperation();
     let selector = {
-        authorCreateForm : $("#authorCreateForm"),
-        authorCreateBtn : $("#authorCreateBtn"),
-        authorResetBtn: $("#authorResetBtn"),
-        authorList: $("#authorList"),
+        categoryCreateForm : $("#categoryCreateForm"),
+        categoryCreateBtn : $("#categoryCreateBtn"),
+        categoryResetBtn: $("#categoryResetBtn"),
+        categoryList: $("#categoryList"),
         tableInformation: '',
         
         name: $("#Name"),
-        edit: ".editAuthorInformation",
-        delete: ".deleteAuthorInformation",
+        edit: ".editCategoryInformation",
+        delete: ".deleteCategoryInformation",
         id : '',
     };
 
-    class Author{
+    class Category{
         Save(){
-            let formData = new FormData(selector.authorCreateForm[0]);
+            let formData = new FormData(selector.categoryCreateForm[0]);
             formData.append("save", "save");
-            let response = ajaxOperation.SaveAjax("../controller/Author.php", formData);
+            let response = ajaxOperation.SaveAjax("../controller/Category.php", formData);
             if(JSON.parse(response) === true){
-                toastr.success("Successfully Added Author", "Success");
-                selector.authorCreateForm[0].reset();
+                toastr.success("Successfully Added Category", "Success");
+                selector.categoryCreateForm[0].reset();
             }
             else{
-                toastr.error("Duplicate Author Name", "Error");
+                toastr.error("Duplicate Category Name", "Error");
             }
         }
         Update(id){
-            let formData = new FormData(selector.authorCreateForm[0]);
+            let formData = new FormData(selector.categoryCreateForm[0]);
             formData.append("Id", id);
             formData.append("Update", "Update");
 
-            let response = ajaxOperation.SaveAjax("../controller/Author.php", formData);
+            let response = ajaxOperation.SaveAjax("../controller/Category.php", formData);
             console.log(response);
             if(JSON.parse(response) === true){
-                toastr.success("Successfully Updated Admin!", "Success");
-                selector.authorCreateForm[0].reset();
+                toastr.success("Successfully Updated Category!", "Success");
+                selector.categoryCreateForm[0].reset();
             }
             else{
                 toastr.error("Something went wrong", "Error");
             }
         }
         Delete(id){
-            let response = ajaxOperation.GetAjaxByValue("../controller/Author.php", id);
+            let response = ajaxOperation.GetAjaxByValue("../controller/Category.php", id);
             if(JSON.parse(response) === true){
-                toastr.success("Author Deleted Successfully!", "Success");
+                toastr.success("Category Deleted Successfully!", "Success");
             }
             else{
                 toastr.error("Something went wrong", "Error");
             }
         }
     }
-    let validator = selector.authorCreateForm.validate({
+    let validator = selector.categoryCreateForm.validate({
                 rules: {
                     Name: {
                         required: true,
@@ -196,7 +196,7 @@
             });
     
     function GenerateTable(){
-        var adminList = selector.authorList.dataTable({
+        var adminList = selector.categoryList.dataTable({
             "processing": true,
             "serverSide": true,
             "filter": true,
@@ -205,7 +205,7 @@
             "lengthMenu": [[5, 10, 50, 100, 150, 200, 500], [5, 10, 50, 100, 150, 200, 500]],
             "order": [[0, "desc"]],
                 "ajax": {
-                    "url": "../controller/AuthorList.php",
+                    "url": "../controller/CategoryList.php",
                     "type": "POST",
                     "data": function (data) {
                     },
@@ -224,10 +224,10 @@
                                 <div class="btn-group">
                                     <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu" >
-                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editAuthorInformation" 
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editCategoryInformation" 
                                         name = "${full.Name}" id = "${full.Id}"
                                     ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</button >
-                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deleteAuthorInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deleteCategoryInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
                                 </div>
                                 </div>`;
                         }
@@ -239,12 +239,12 @@
     }
 
     window.onload = GenerateTable();
-    let process = new Author();
-    selector.authorCreateBtn.click(function(){
-        if($(this).text() === "Save" && selector.authorCreateForm.valid()){ 
+    let process = new Category();
+    selector.categoryCreateBtn.click(function(){
+        if($(this).text() === "Save" && selector.categoryCreateForm.valid()){ 
             process.Save();
         }
-        else if($(this).text() === "Update" && selector.authorCreateForm.valid()){
+        else if($(this).text() === "Update" && selector.categoryCreateForm.valid()){
             process.Update(selector.id);
             $(this).text("Save");
         }
@@ -254,7 +254,7 @@
     $(document).on("click", selector.edit, function(){
         selector.name.val($(this).attr("name"));
         selector.id = $(this).attr("id");
-        selector.authorCreateBtn.text("Update");
+        selector.categoryCreateBtn.text("Update");
     });
 
     $(document).on("click", selector.delete, function(){
@@ -278,8 +278,8 @@
         
     });
 
-    selector.authorResetBtn.click(function(){
-        selector.authorCreateBtn.text("Save");
+    selector.categoryResetBtn.click(function(){
+        selector.categoryCreateBtn.text("Save");
     })
 })();
 </script>
@@ -288,48 +288,48 @@
 (function(){
     let ajaxOperation = new AjaxOperation();
     let selector = {
-        publicationCreateForm : $("#publicationCreateForm"),
-        publicationCreateBtn : $("#publicationCreateBtn"),
-        publicationResetBtn: $("#publicationResetBtn"),
-        publicationList: $("#publicationList"),
+        subCategoryCreateForm : $("#subCategoryCreateForm"),
+        subCategoryCreateBtn : $("#subCategoryCreateBtn"),
+        subCategoryResetBtn: $("#subCategoryResetBtn"),
+        subCategoryList: $("#subCategoryList"),
         tableInformation: '',
         
-        name: $("#publicationName"),
-        edit: ".editPublicationInformation",
-        delete: ".deletePublicationInformation",
+        name: $("#subCategoryName"),
+        edit: ".editSubCategoryInformation",
+        delete: ".deleteSubCategoryInformation",
         id : '',
     };
 
-    class Publication{
+    class SubCategory{
         Save(){
-            let formData = new FormData(selector.publicationCreateForm[0]);
+            let formData = new FormData(selector.subCategoryCreateForm[0]);
             formData.append("save", "save");
-            let response = ajaxOperation.SaveAjax("../controller/Publication.php", formData);
+            let response = ajaxOperation.SaveAjax("../controller/SubCategory.php", formData);
             if(JSON.parse(response) === true){
-                toastr.success("Successfully Added Publication", "Success");
-                selector.publicationCreateForm[0].reset();
+                toastr.success("Successfully Added Sub-Category", "Success");
+                selector.subCategoryCreateForm[0].reset();
             }
             else{
-                toastr.error("Duplicate Publication Name", "Error");
+                toastr.error("Duplicate Sub-Category Name", "Error");
             }
         }
         Update(id){
-            let formData = new FormData(selector.publicationCreateForm[0]);
+            let formData = new FormData(selector.subCategoryCreateForm[0]);
             formData.append("Id", id);
             formData.append("Update", "Update");
 
-            let response = ajaxOperation.SaveAjax("../controller/Publication.php", formData);
+            let response = ajaxOperation.SaveAjax("../controller/SubCategory.php", formData);
             
             if(JSON.parse(response) === true){
-                toastr.success("Successfully Updated Admin!", "Success");
-                selector.publicationCreateForm[0].reset();
+                toastr.success("Successfully Updated Sub-Category!", "Success");
+                selector.subCategoryCreateForm[0].reset();
             }
             else{
                 toastr.error("Something went wrong", "Error");
             }
         }
         Delete(id){
-            let response = ajaxOperation.GetAjaxByValue("../controller/Publication.php", id);
+            let response = ajaxOperation.GetAjaxByValue("../controller/SubCategory.php", id);
             if(JSON.parse(response) === true){
                 toastr.success("Deleted Successfully!", "Success");
             }
@@ -338,14 +338,14 @@
             }
         }
     }
-    let validator = selector.publicationCreateForm.validate({
+    let validator = selector.subCategoryCreateForm.validate({
                 rules: {
-                    PublicationName: {
+                    subCategoryName: {
                         required: true,
                     },
                 },
                 messages: {
-                    PublicationName: "Name Field is required",
+                    subCategoryName: "Name Field is required",
                 },
                 submitHandler: function (form) {
 
@@ -353,7 +353,7 @@
             });
     
     function GenerateTable(){
-        var adminList = selector.publicationList.dataTable({
+        var adminList = selector.subCategoryList.dataTable({
             "processing": true,
             "serverSide": true,
             "filter": true,
@@ -362,7 +362,7 @@
             "lengthMenu": [[5, 10, 50, 100, 150, 200, 500], [5, 10, 50, 100, 150, 200, 500]],
             "order": [[0, "desc"]],
                 "ajax": {
-                    "url": "../controller/PublicationList.php",
+                    "url": "../controller/SubCategoryList.php",
                     "type": "POST",
                     "data": function (data) {
                     },
@@ -381,10 +381,10 @@
                                 <div class="btn-group">
                                     <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu" >
-                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editPublicationInformation" 
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editSubCategoryInformation" 
                                         name = "${full.Name}" id = "${full.Id}"
                                     ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</button >
-                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deletePublicationInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deleteSubCategoryInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
                                 </div>
                                 </div>`;
                         }
@@ -396,13 +396,13 @@
     }
 
     window.onload = GenerateTable();
-    let process = new Publication();
+    let process = new SubCategory();
 
-    selector.publicationCreateBtn.click(function(){
-        if($(this).text() === "Save" && selector.publicationCreateForm.valid()){ 
+    selector.subCategoryCreateBtn.click(function(){
+        if($(this).text() === "Save" && selector.subCategoryCreateForm.valid()){ 
             process.Save();
         }
-        else if($(this).text() === "Update" && selector.publicationCreateForm.valid()){
+        else if($(this).text() === "Update" && selector.subCategoryCreateForm.valid()){
             process.Update(selector.id);
             $(this).text("Save");
         }
@@ -412,7 +412,7 @@
     $(document).on("click", selector.edit, function(){
         selector.name.val($(this).attr("name"));
         selector.id = $(this).attr("id");
-        selector.publicationCreateBtn.text("Update");
+        selector.subCategoryCreateBtn.text("Update");
     });
 
     $(document).on("click", selector.delete, function(){
@@ -435,8 +435,8 @@
         });
     });
 
-    selector.publicationResetBtn.click(function(){
-        selector.publicationCreateBtn.text("Save");
+    selector.subCategoryResetBtn.click(function(){
+        selector.subCategoryCreateBtn.text("Save");
     })
 })();
 </script>
