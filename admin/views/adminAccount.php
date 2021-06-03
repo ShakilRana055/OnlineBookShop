@@ -1,8 +1,6 @@
 <?php 
     include("layout/topbar.php");
     include("layout/sidebar.php");
-    $sql = "SELECT * FROM `supplier` ORDER BY `Id` DESC";
-    $adminList = mysqli_query($con, $sql);
 ?>
 
 <style>

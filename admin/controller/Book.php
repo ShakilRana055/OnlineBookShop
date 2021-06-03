@@ -6,24 +6,25 @@
         try 
         {
             $Name = $_POST['Name'];
-            $Email = $_POST['Email'];
-            $Phone = $_POST['Phone'];
-            $Address = $_POST['Address'];
-            $Password = md5($_POST['Password']);
-            
+            $WarningQuantity = $_POST['WarningQuantity'];
+            $Description = $_POST['Description'];
+            $AuthorId = $_POST['AuthorId'];
+            $CategoryId = $_POST['CategoryId'];
+            $SubCategoryId = $_POST['SubCategoryId'];
+            $PublicationId = $_POST['PublicationId'];
+
             $PhotoUrl = '';
             $Photo = $_FILES["Photo"]["name"];
             $photoName = explode(".", basename($Photo));
             $convertedPhotoName = '';
             
             if($Photo != null){
-                $convertedPhotoName = time()."admin.".$photoName[1];
+                $convertedPhotoName = time()."book.".$photoName[1];
                 $PhotoUrl = "../public/image/".$convertedPhotoName;
             }
             
-            $sql = "INSERT INTO `users`(`Name`, `Email`, `Phone`, `Address`, `Password`, `PhotoUrl`, `UserType`, `CreatedDate`) 
-            VALUES ('$Name','$Email','$Phone','$Address','$Password', '$PhotoUrl', 'Admin', '$currentDate' )";
-
+            $sql = "INSERT INTO `books`(`Name`, `WarningQuantity`, `PhotoUrl`, `Description`, `AuthorId`, `CategoryId`, `SubCategoryId`, `PublicationId`, `CreatedDate`) 
+                    VALUES ('$Name', '$WarningQuantity', '$PhotoUrl', '$Description', '$AuthorId', '$CategoryId', '$SubCategoryId', '$PublicationId', '$currentDate')";
             $result = mysqli_query($con , $sql);
             if($result != null){
                 if($PhotoUrl != null){
@@ -44,10 +45,14 @@
     if(isset($_POST['Update'])){
         try 
         {
-            $Name = $_POST['Name'];
-            $Phone = $_POST['Phone'];
-            $Address = $_POST['Address'];
             $id = $_POST['Id'];
+            $Name = $_POST['Name'];
+            $WarningQuantity = $_POST['WarningQuantity'];
+            $Description = $_POST['Description'];
+            $AuthorId = $_POST['AuthorId'];
+            $CategoryId = $_POST['CategoryId'];
+            $SubCategoryId = $_POST['SubCategoryId'];
+            $PublicationId = $_POST['PublicationId'];
 
             $PhotoUrl = '';
             $Photo = $_FILES["Photo"]["name"];
@@ -56,13 +61,17 @@
             $sql = '';
             
             if($Photo != null){
-                $convertedPhotoName = time()."admin.".$photoName[1];
+                $convertedPhotoName = time()."book.".$photoName[1];
                 $PhotoUrl = "../public/image/".$convertedPhotoName;
-                $sql = "UPDATE `users` SET `Name`='$Name',`Phone`='$Phone',`Address`='$Address', `PhotoUrl` = '$PhotoUrl' WHERE `Id` = '$id'";
-            
+
+                $sql = "UPDATE `books` SET `Name`= '$Name',`WarningQuantity`= '$WarningQuantity',`PhotoUrl`='$PhotoUrl',
+                `Description`= '$Description',`AuthorId`='$AuthorId',`CategoryId`='$CategoryId',
+                `SubCategoryId`= '$SubCategoryId',`PublicationId`='$PublicationId' WHERE `Id` = '$id'";
             }
             else {
-                $sql = "UPDATE `users` SET `Name`='$Name',`Phone`='$Phone',`Address`='$Address' WHERE `Id` = '$id'";
+                $sql = "UPDATE `books` SET `Name`= '$Name',`WarningQuantity`= '$WarningQuantity',
+                `Description`= '$Description',`AuthorId`='$AuthorId',`CategoryId`='$CategoryId',
+                `SubCategoryId`= '$SubCategoryId',`PublicationId`='$PublicationId' WHERE `Id` = '$id'";
             }
             $result = mysqli_query($con, $sql);
 
@@ -85,7 +94,7 @@
         try 
         {
             $id = $_GET['search'];
-            $sql = "DELETE FROM `users` WHERE `Id` = '$id'";
+            $sql = "DELETE FROM `book` WHERE `Id` = '$id'";
             $result = mysqli_query($con, $sql);
             if($result != null){
                 echo json_encode(true);
