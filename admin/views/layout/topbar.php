@@ -1,11 +1,11 @@
 <?php session_start();?>
-<?php include("../../connection/DatabaseConnection.php")?>
+<?php include("../../connection/DatabaseConnection.php");?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Book Shop</title>
+    <title>Online Book Shop <?php echo $headerName;?></title>
 
 
     <!-- App favicon -->

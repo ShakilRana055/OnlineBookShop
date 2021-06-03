@@ -1,4 +1,5 @@
 <?php 
+    $headerName = "- Book List";
     include("layout/topbar.php");
     include("layout/sidebar.php");
 ?>
@@ -39,45 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                            $sql = "SELECT b.*, auth.Name AuthorName, ct.Name CategoryName, sb.Name SubCategoryName, pb.Name PublicationName
-                                    FROM books b 
-                                    INNER JOIN authors auth ON auth.Id = b.AuthorId 
-                                    INNER JOIN category ct ON ct.Id = b.CategoryId 
-                                    INNER JOIN subcategory sb ON sb.Id = b.SubCategoryId 
-                                    INNER JOIN publications pb ON pb.Id = b.PublicationId";
-                            $result = mysqli_query($con, $sql);
-                            while($row = mysqli_fetch_assoc($result)){
-                                $id = $row['Id'];
-                                $photoUrl = $row['PhotoUrl'];
-                                echo '<tr>
-                                        <td>'.$row['Name'].'</td>
-                                        <td>'.$row['WarningQuantity'].'</td>'.
-                                        "<td><img src = '$photoUrl' height = 50 width = 50 /></td>".
-                                        '<td>'.$row['AuthorName'].'</td>
-                                        <td>'.$row['CategoryName'].'</td>
-                                        <td>'.$row['SubCategoryName'].'</td>
-                                        <td>'.$row['PublicationName'].'</td>'.
-                                        "<td>
-                                            <div class='btn-group'>
-                                            <i class='fa fa-ellipsis-h' title = 'Actions' style = 'cursor:pointer;' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></i>
-                                                <div class='dropdown-menu' >
-                                                    <button style='font-size: inherit;' class='dropdown-item btn-rx editBookInformation' 
-                                                        id = '$id'
-                                                    >
-                                                    <i class='fa fa-check-circle' aria-hidden='true'></i>Edit
-                                                    </button >
-                                                    <button style='font-size: inherit;' class='dropdown-item btn-rx deleteBookInformation' 
-                                                        id = '$id' 
-                                                        > 
-                                                        <i class='fa fa-times' aria-hidden='true'></i>Delete
-                                                    </button >
-                                                </div>
-                                            </div>
-                                        </td>
-                                        </tr>";
-                            }
-                        ?>
+                        
                     </tbody>
                 </table>
             </div>
@@ -89,32 +52,196 @@
 <script>
 
 (function(){
+    let ajaxOperation = new AjaxOperation();
+    let modalOperation = new ModalOperation();
+
     let selector = {
         tableInformation: '',
-        edit: ".editSupplierInformation",
-        delete: ".deleteSupplierInformation",
-        id : '',
+        edit: ".editBookInformation",
+        delete: ".deleteBookInformation",
+        Id : '',
         bookList: $("#bookList"),
+
+        bookEditBtn: "#informationModal #bookEditBtn",
+        bookEditCreateForm: $("#informationModal #bookEditCreateForm"),
+        photo : $("#informationModal #Photo"),
     };
 
-    function GenerateTable(){
+    let modal = {
+        modalId : "#informationModal",
+        modalHeading : $("#modalHeading"),
+        modalDiv: "#informationModalDiv",
+    }
+
+    class Book {
+        Update(id){
+            let formData = new FormData($("#informationModal #bookEditCreateForm")[0]);
+            formData.append("Id", id);
+            let photo = selector.photo.get(0);
+            formData.append('Photo', photo.files);
+            formData.append("Update", "Update");
+            let response = ajaxOperation.SaveAjax("../controller/Book.php", formData);
+            if(JSON.parse(response) === true){
+                toastr.success("Successfully Updated Book!", "Success");
+                modalOperation.ModalClose(modal.modalId, modal.modalDiv);
+                selector.tableInformation.fnFilter();
+            }
+            else{
+                toastr.error("Something went wrong", "Error");
+            }
+        }
+
+        Delete(id){
+            let response = ajaxOperation.GetAjaxByValue("../controller/Book.php", id);
+            
+            if(JSON.parse(response) === true){
+                toastr.success("Successfully Deleted Book!", "Success");
+            }
+            else{
+                toastr.error("Something went wrong", "Error");
+            }
+        }
+        BookDetail(id){
+            let response = ajaxOperation.GetAjaxHtmlByValue("htmlHelper/bookDetail.php", id);
+            
+            modalOperation.ModalStatic(modal.modalId);
+            modal.modalHeading.text("Edit Book");
+            modalOperation.ModalOpenWithHtml(modal.modalId, modal.modalDiv, response);
+        }
+    }
+    
+    let validator = $("#informationModal #bookEditCreateForm").validate({
+            rules: {
+                Name: {
+                    required: true,
+                },
+                WarningQuantity: {
+                    required: true,
+                },
+                AuthorId: {
+                    required: true,
+                },
+                CategoryId: {
+                    required: true,
+                },
+                SubCategoryId: {
+                    required: true,
+                },
+                PublicationId: {
+                    required: true,
+                },
+            },
+            messages: {
+                Name: "Name is required",
+                WarningQuantity: "Warning Quantity is required",
+                AuthorId: "Author name is required",
+                CategoryId: "Category Name is required",
+                SubCategoryId: "Sub-Category Name is required",
+                PublicationId: "Publisher Name is required",
+            },
+            submitHandler: function (form) {
+            }
+        });
+
+    
+    function PopulateData(){
         var bookList = selector.bookList.dataTable({
                 "processing": true,
-                "serverSide": false,
+                "serverSide": true,
                 "filter": true,
                 "pageLength": 10,
                 "autoWidth": false,
                 'dom': "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
                 "order": [[0, "desc"]],
-                "columnDefs": [
-                        { "className": "custom", "targets": [0, 1, 2, 3, 4, 5, 6, 7] },
+                    "ajax": {
+                        "url": "../controller/BookList.php",
+                        "type": "POST",
+                        "data": function (data) {
+
+                        },
+                        "complete": function (json) {
+
+                        }
+                    },
+                    "columnDefs": [
+                        { "className": "custom", "targets": [0, 1, 2, 3,4,5,6,7] },
                     ],
+                    "columns": [
+                        {
+                            "render": function (data, type, full, meta) {
+                                return `<a style = 'cursor:pointer; font-weight = bold;' class = "bookInfo" bookId = "${full.Id}" tittle = "Info"> ${full.Name} </a>`;
+                            }
+                        },
+                        
+                        { "data": "WarningQuantity", "name": "WarningQuantity", "autowidth": true, "orderable": true },
+                        {
+                            "render": function (data, type, full, meta) {
+                                return `<img src = "${full.PhotoUrl}" height = "50" width = "50" alt = "No" />`;
+                            }
+                        },
+                        { "data": "AuthorName", "name": "AuthorId", "autowidth": true, "orderable": true },
+                        { "data": "CategoryName", "name": "CategoryId", "autowidth": true, "orderable": true },
+                        { "data": "SubCategoryName", "name": "SubCategoryId", "autowidth": true, "orderable": true },
+                        { "data": "PublicationName", "name": "PublicationId", "autowidth": true, "orderable": true },
+                        {
+                            "render": function (data, type, full, meta) {
+                                return `
+                                <div class="btn-group">
+                                    <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                <div class="dropdown-menu" >
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editBookInformation" 
+                                         id = "${full.Id}"
+                                    ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</button >
+                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deleteBookInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
+                                </div>
+                                </div>`;
+                            }
+                        },
+                    ]
                 });
         selector.tableInformation = bookList;
+    
     }
 
-    window.onload = GenerateTable();
+    window.onload = PopulateData();
+
+    let process = new Book();
+
+    $(document).on("click", selector.delete, function(){
+        Swal.fire({
+            title: 'Are You Sure to Delete?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            showConfirmButton: true,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.value) {
+                process.Delete($(this).attr("id"));
+                selector.tableInformation.fnFilter();
+            }
+        });
+        
+    });
+    $(document).on("click", selector.edit, function(){
+        selector.Id = $(this).attr("id");
+        process.BookDetail($(this).attr("id"));
+    });
+
+    $(document).on("click", selector.bookEditBtn, function(){
+
+        if($(this).text() === "Save" && $("#informationModal #bookEditCreateForm").valid()){ 
+            //process.Update(selector.Id);
+        }
+        else{
+            toastr.error("Please fill up the required field", "Error");
+        }
+    })
 })();
 
 </script>

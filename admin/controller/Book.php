@@ -94,17 +94,17 @@
         try 
         {
             $id = $_GET['search'];
-            $sql = "DELETE FROM `book` WHERE `Id` = '$id'";
+            $sql = "DELETE FROM `books` WHERE `Id` = '$id'";
             $result = mysqli_query($con, $sql);
             if($result != null){
                 echo json_encode(true);
             }
             else{
-                echo json_encode(false);
+                echo json_encode($sql);
             }
         } 
         catch (Throwable $th) {
-            echo json_encode(false);
+            echo json_encode($th);
         }
     }
 ?>

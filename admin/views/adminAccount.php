@@ -1,4 +1,5 @@
 <?php 
+    $headerName = '- Create Admin';
     include("layout/topbar.php");
     include("layout/sidebar.php");
 ?>
@@ -151,7 +152,6 @@
 
             formData.append("Update", "Update");
             let response = ajaxOperation.SaveAjax("../controller/Admin.php", formData);
-            console.log(response);
             if(JSON.parse(response) === true){
                 toastr.success("Successfully Updated Admin!", "Success");
                 selector.adminCreateForm[0].reset();

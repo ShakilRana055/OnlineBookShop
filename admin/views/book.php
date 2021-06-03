@@ -1,4 +1,5 @@
 <?php 
+    $headerName = '- Book';
     include("layout/topbar.php");
     include("layout/sidebar.php");
 ?>

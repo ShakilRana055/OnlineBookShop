@@ -1,4 +1,5 @@
 <?php 
+    $headerName = '- Author, Publication';
     include("layout/topbar.php");
     include("layout/sidebar.php");
     $sql = "SELECT * FROM `supplier` ORDER BY `Id` DESC";
