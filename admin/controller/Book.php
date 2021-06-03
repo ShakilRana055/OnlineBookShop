@@ -79,7 +79,7 @@
                 if($PhotoUrl != null){
                     move_uploaded_file( $_FILES['Photo']['tmp_name'] , $PhotoUrl);
                 }
-                echo json_encode(true);
+                header('Location: ../views/bookList.php');
             }
             else{
                 echo json_encode(false);

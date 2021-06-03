@@ -14,9 +14,9 @@
                 <span validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label name = "WarningQuantity" class="control-label"> Warning Quantity</label>
-                <input type = "number" value = "<?php echo $QueryResult['WarningQuantity'];?>"  min = "1" name = "WarningQuantity" id = "WarningQuantity" class="form-control" />
-                <span validation-for="WarningQuantity" class="text-danger"></span>
+                <label for = "WarningQuantity1" class="control-label"> Warning Quantity</label>
+                <input type = "number" value = "<?php echo $QueryResult['WarningQuantity'];?>"  min = "1" name = "WarningQuantity" id = "WarningQuantity1" class="form-control" />
+                <span validation-for="WarningQuantity1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for = "Photo" class="control-label">Photo</label>

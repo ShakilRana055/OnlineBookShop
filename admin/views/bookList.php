@@ -74,23 +74,6 @@
     }
 
     class Book {
-        Update(id){
-            let formData = new FormData($("#informationModal #bookEditCreateForm")[0]);
-            formData.append("Id", id);
-            let photo = selector.photo.get(0);
-            formData.append('Photo', photo.files);
-            formData.append("Update", "Update");
-            let response = ajaxOperation.SaveAjax("../controller/Book.php", formData);
-            if(JSON.parse(response) === true){
-                toastr.success("Successfully Updated Book!", "Success");
-                modalOperation.ModalClose(modal.modalId, modal.modalDiv);
-                selector.tableInformation.fnFilter();
-            }
-            else{
-                toastr.error("Something went wrong", "Error");
-            }
-        }
-
         Delete(id){
             let response = ajaxOperation.GetAjaxByValue("../controller/Book.php", id);
             
@@ -110,38 +93,7 @@
         }
     }
     
-    let validator = $("#informationModal #bookEditCreateForm").validate({
-            rules: {
-                Name: {
-                    required: true,
-                },
-                WarningQuantity: {
-                    required: true,
-                },
-                AuthorId: {
-                    required: true,
-                },
-                CategoryId: {
-                    required: true,
-                },
-                SubCategoryId: {
-                    required: true,
-                },
-                PublicationId: {
-                    required: true,
-                },
-            },
-            messages: {
-                Name: "Name is required",
-                WarningQuantity: "Warning Quantity is required",
-                AuthorId: "Author name is required",
-                CategoryId: "Category Name is required",
-                SubCategoryId: "Sub-Category Name is required",
-                PublicationId: "Publisher Name is required",
-            },
-            submitHandler: function (form) {
-            }
-        });
+    
 
     
     function PopulateData(){
@@ -168,11 +120,7 @@
                         { "className": "custom", "targets": [0, 1, 2, 3,4,5,6,7] },
                     ],
                     "columns": [
-                        {
-                            "render": function (data, type, full, meta) {
-                                return `<a style = 'cursor:pointer; font-weight = bold;' class = "bookInfo" bookId = "${full.Id}" tittle = "Info"> ${full.Name} </a>`;
-                            }
-                        },
+                        { "data": "Name", "name": "Name", "autowidth": true, "orderable": true },
                         
                         { "data": "WarningQuantity", "name": "WarningQuantity", "autowidth": true, "orderable": true },
                         {
@@ -190,9 +138,9 @@
                                 <div class="btn-group">
                                     <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu" >
-                                    <button style="font-size: inherit;" class="dropdown-item btn-rx editBookInformation" 
+                                    <a href = "bookEdit.php?search=${full.Id}" style="font-size: inherit;" class="dropdown-item btn-rx" 
                                          id = "${full.Id}"
-                                    ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</button >
+                                    ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</a>
                                     <button style="font-size: inherit;" class="dropdown-item btn-rx deleteBookInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
                                 </div>
                                 </div>`;
@@ -232,16 +180,6 @@
         selector.Id = $(this).attr("id");
         process.BookDetail($(this).attr("id"));
     });
-
-    $(document).on("click", selector.bookEditBtn, function(){
-
-        if($(this).text() === "Save" && $("#informationModal #bookEditCreateForm").valid()){ 
-            //process.Update(selector.Id);
-        }
-        else{
-            toastr.error("Please fill up the required field", "Error");
-        }
-    })
 })();
 
 </script>
