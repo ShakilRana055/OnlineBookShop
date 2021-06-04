@@ -8,7 +8,7 @@
             }
             return $newNumber.$number;
         }
-        public static function PurchaseNumber($lastNumber, $invoiceType){
+        public static function InvoiceNumber($lastNumber, $invoiceType){
             $purchaseNumber = $invoiceType;
             $digitLength = 6;
             
@@ -16,12 +16,13 @@
                 $purchaseNumber.= self::FormatString("1", $digitLength);
             }
             else{
+                $number = array();
                 $number = explode("-", $lastNumber);
-                $nextNumber = intval($number[1]) + 1;
+                $nextNumber = (int)$number[1] + 1;
                 $purchaseNumber.= self::FormatString((string)$nextNumber, $digitLength);
             }
             return $purchaseNumber;
         }
     }
-    //echo AutoGenerate::PurchaseNumber("INV-111003", "INV-");
+   // echo AutoGenerate::InvoiceNumber("PUR-1", "PUR-");
 ?>

@@ -104,7 +104,7 @@
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="Inventory" asp-action="Index">Purchase</a></li>
+                                    <li><a href = "purchase.php">Purchase</a></li>
                                     <li><a asp-controller="Inventory" asp-action="PurchaseList">Purchase List</a></li>
                                     <li><a asp-controller="Inventory" asp-action="AccountPay">Accounts Payable</a></li>
                                 </ul>
