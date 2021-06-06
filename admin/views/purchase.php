@@ -73,7 +73,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group" style="margin-top: 22px;">
-                                    <button type="button" id="purchaseAddBtn" class="btn btn-success btn-sm">Add</button>
+                                    <button type="button" id="bookAddBtn" class="btn btn-success btn-sm">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="purchaseProductTBody">
+                                <tbody id="purchaseBookTBody">
                                 </tbody>
                                 <tfoot>
                                     <tr style="background-color: #9999ff;font-weight: 900;color: black;">
@@ -113,7 +113,7 @@
                                     </tr>
                                     <tr style="font-weight: 900;color: black;">
                                         <td colspan="4" align="right">Paid Amount</td>
-                                        <td><input type="number" class="form-control rightAlign" id="paidAmount" /></td>
+                                        <td><input type="number" class="form-control rightAlign" id="paidAmount" readonly /></td>
                                         <td>Payment Mode</td>
                                         <td>
                                             <select class="form-control" id="paymentMode">
@@ -134,8 +134,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary pull-right" id="purchaseResetBtn">Reset</button>
-                    <button type="button" id="purchaseCreateBtn" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary pull-right" id="bookResetBtn">Reset</button>
+                    <button type="button" id="bookCreateBtn" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </form>
@@ -152,17 +152,17 @@
 
         let selector = {
             invoiceNumber: $("#invoiceNumber"),
-            purchaseAddBtn: $("#purchaseAddBtn"),
-            productId: $("#ProductId"),
-            purchaseProductTBody: $("#purchaseProductTBody"),
+            bookAddBtn: $("#bookAddBtn"),
+            bookId: $("#BookId"),
+            purchaseBookTBody: $("#purchaseBookTBody"),
             subTotal: $("#subTotal"),
             grandTotal: $("#grandTotal"),
             discountAmount: $("#discountAmount"),
             paidAmount: $("#paidAmount"),
             paymentMode: $("#paymentMode"),
             dues: $("#dues"),
-            purchaseCreateBtn: $("#purchaseCreateBtn"),
-            purchaseResetBtn: $("#purchaseResetBtn"),
+            bookCreateBtn: $("#bookCreateBtn"),
+            bookResetBtn: $("#bookResetBtn"),
             supplierId: $("#SupplierId"),
 
             productIdInfo: ".productIdInfo",
@@ -174,16 +174,26 @@
             deleteInfo: ".deleteInfo",
             incrementQuantity: ".incrementQuantity",
             decrementQuantity: ".decrementQuantity",
-
+            unitPriceInfo: ".unitPriceInfo",
             rowId: 1,
             serialNumber: 1,
-            selectedProduct: [],
+            selectedBook: [],
         }
         
         function InvoiceNumber(){
             let operation = new AjaxOperation();
             let response = operation.GetAjaxByValue("../controller/Purchase.php", "Purchase");
             selector.invoiceNumber.text(response);
+        }
+
+        class PurchaseDetail{
+            constructor(bookId, quantity, purchaseUnitPrice, sellUnitPrice, purchaseTax, totalPrice){
+                this.bookId = bookId;
+                this.purchaseUnitPrice = purchaseUnitPrice;
+                this.sellUnitPrice = sellUnitPrice;
+                this.purchaseTax = purchaseTax;
+                this.totalPrice = totalPrice;
+            }
         }
 
         class HtmlProcess{
@@ -197,7 +207,7 @@
                                     <div class="input-group-prepend">
                                         <button class="btn btn-danger btn-sm decrementQuantity" tittle = "Decrement" productId="${productId}" unitPrice = "${unitPrice}" serialNumber="${selector.serialNumber}" type="button"><i class="fa fa-minus-circle"></i></button>
                                     </div>
-                                    <input type="number" class="form-control quantityInfo" style = "text-align: center;" unitPrice = "${unitPrice}" productId="${productId}" serialNumber="${selector.serialNumber}" value="${quantity}">
+                                    <input type="number" class="form-control quantityInfo" style = "text-align: center;" min = "1" unitPrice = "${unitPrice}" productId="${productId}" serialNumber="${selector.serialNumber}" value="${quantity}">
                                     <div class="input-group-append">
                                         <button class="btn btn-success btn-sm incrementQuantity" tittle = "Increment" productId="${productId}" unitPrice = "${unitPrice}" serialNumber="${selector.serialNumber}" type="button"><i class="fa fa-plus-circle"></i></button>
                                     </div>
@@ -211,7 +221,7 @@
                             </td>
                             <td>
                                 <div class="input-group">
-                                    <input type="text" class="form-control vatAndTaxInfo rightAlign" style = "border:none;" serialNumber="${selector.serialNumber}" value="${vatAndTax}">
+                                    <input type="text" class="form-control vatAndTaxInfo rightAlign" min = "0" max = "20" style = "border:none;" serialNumber="${selector.serialNumber}" value="${vatAndTax}">
                                 </div>
                             </td>
                             <td>
@@ -236,14 +246,125 @@
             }
         }
 
+        class PurchaseProcess{
+            IsExist(array, bookId){
+                let index = array.findIndex(item => item === bookId);
+                return index;
+            }
+            Summation(className){
+                let sum = 0;
+                $(className).each(function(){
+                    sum += Number($(this).val());
+                });
+                return sum;
+            }
+
+            GetRowWiseValue(className, serialNumber){
+                let value = 0;
+                $(className).each(function(){
+                    if($(this).attr("serialNumber") === serialNumber)
+                        value = $(this).val();
+                });
+                return value;
+            }
+            SetRowWiseValue(className, serialNumber, value){
+                $(className).each(function(){
+                    if($(this).attr("serialNumber") === serialNumber)
+                        $(this).val(value);
+                });
+            }
+            SpecificRowWisePurchase(serialNumber){
+                let unitPrice = this.GetRowWiseValue(selector.unitPriceInfo, serialNumber);
+                let quantity = this.GetRowWiseValue(selector.quantityInfo, serialNumber);
+                let vatAndTax = this.GetRowWiseValue(selector.vatAndTaxInfo, serialNumber);
+                let purchasePrice =(( unitPrice * quantity) + ( unitPrice * quantity * vatAndTax / 100 )).toFixed(2);
+                
+                this.SetRowWiseValue(selector.purchasePriceInfo, serialNumber, purchasePrice);
+                this.CalculatePrice();
+            }
+            CalculatePrice(){
+                let subTotal = this.Summation(selector.purchasePriceInfo);
+                selector.subTotal.text(subTotal.toFixed(2));
+                let discount = selector.discountAmount.val() === null ? 0 :  selector.discountAmount.val();
+                let grandTotal = (subTotal - ( subTotal * discount / 100 )).toFixed(2);
+                selector.grandTotal.text(grandTotal);
+                selector.paidAmount.val(grandTotal);
+                selector.dues.text(0.00);
+            }
+        }
+
         window.onload = InvoiceNumber();
 
         let htmlProcess = new HtmlProcess();
-        selector.purchaseAddBtn.click(function(){
-            let data = htmlProcess.AddEntryColumn('1', 'Learn JavaScript', '10.00','200.00', '0', '200.00',250.00);
-            let rowCount = selector.purchaseProductTBody.find("tr").length;
-            rowCount > 0 ? $("#purchaseProductTBody tr:first").before(data) : selector.purchaseProductTBody.append(data);
-                       
+        let process = new PurchaseProcess();
+
+
+        selector.bookAddBtn.click(function(){
+            if(selector.bookId.val() !== ""){
+                if(selector.selectedBook.length === 0 || process.IsExist(selector.selectedBook, selector.bookId.val()) === -1){
+                    selector.selectedBook.push(selector.bookId.val()); // pushing into selected array
+                    let data = htmlProcess.AddEntryColumn(selector.bookId.val(), $("#BookId option:selected").text(), '10.00','200.00', '0', '200.00',250.00);
+                    let rowCount = selector.purchaseBookTBody.find("tr").length;
+                    rowCount > 0 ? $("#purchaseBookTBody tr:first").before(data) : selector.purchaseBookTBody.append(data);
+                }
+                else
+                    toastr.error("Book is already taken!", "Error!");
+             }
+            else{
+                toastr.error("Please Select a Book first!", "Error!");
+            }               
+        });
+
+        $(document).on("keyup", selector.unitPriceInfo, function(){
+            let serialNumber = $(this).attr("serialNumber");
+            process.SpecificRowWisePurchase(serialNumber);
+        });
+
+        $(document).on("keyup", selector.quantityInfo, function(){
+            let serialNumber = $(this).attr("serialNumber");
+            process.SpecificRowWisePurchase(serialNumber);
+        });
+
+        $(document).on("keyup", selector.vatAndTaxInfo, function(){
+            let serialNumber = $(this).attr("serialNumber");
+            if($(this).val() >= 0 && $(this).val() <= 20)
+                process.SpecificRowWisePurchase(serialNumber);
+            else{
+                toastr.error("Invalid VAT & TAX", "Error!");
+                $(this).val(0); 
+                process.SpecificRowWisePurchase(serialNumber);
+            }
+                
+        });
+
+        $(document).on("click", selector.incrementQuantity, function(){
+            let serialNumber = $(this).attr("serialNumber");
+            let quantity = Number(process.GetRowWiseValue(selector.quantityInfo, serialNumber)) + 1;
+            process.SetRowWiseValue(selector.quantityInfo, serialNumber, quantity);
+            process.SpecificRowWisePurchase(serialNumber);
+        });
+
+        $(document).on("click", selector.decrementQuantity, function(){
+            let serialNumber = $(this).attr("serialNumber");
+            let quantity = Number(process.GetRowWiseValue(selector.quantityInfo, serialNumber)) - 1;
+            if(quantity >= 1 ){
+                process.SetRowWiseValue(selector.quantityInfo, serialNumber, quantity);
+                process.SpecificRowWisePurchase(serialNumber);
+            }
+            else{
+                process.SetRowWiseValue(selector.quantityInfo, serialNumber, 1);
+                toastr.error("Quantity Can't Zero or Negative", "Error");
+            }
+        });
+
+        selector.discountAmount.keyup(function(){
+            if($(this).val() < 0 && $(this).val() > 20)
+                process.CalculatePrice();
+            else{
+                toastr.error("Discount amount can't negative or upper than 20%", "Error!");
+                $(this).val(0);
+                process.CalculatePrice();
+            }
         });
 
     })();
