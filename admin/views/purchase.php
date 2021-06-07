@@ -85,8 +85,8 @@
                                         <th>Quantity</th>
                                         <th>Unit Price</th>
                                         <th>Vat&Tax</th>
-                                        <th>Price</th>
-                                        <th>Sell Price</th>
+                                        <th>Total Price</th>
+                                        <th>Sell Unit Price</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary pull-right" id="bookResetBtn">Reset</button>
+                    <button type="reset" class="btn btn-secondary pull-right" id="bookResetBtn">Reset</button>
                     <button type="button" id="bookCreateBtn" class="btn btn-primary">Save</button>
                 </div>
             </div>
@@ -171,13 +171,14 @@
             vatAndTaxInfo: ".vatAndTaxInfo",
             priceInfo: ".priceInfo",
             sellPriceInfo: ".sellPriceInfo",
-            deleteInfo: ".deleteInfo",
+            deleteRow: ".deleteRow",
             incrementQuantity: ".incrementQuantity",
             decrementQuantity: ".decrementQuantity",
             unitPriceInfo: ".unitPriceInfo",
             rowId: 1,
             serialNumber: 1,
             selectedBook: [],
+            purchaseDetails: [],
         }
         
         function InvoiceNumber(){
@@ -193,6 +194,7 @@
                 this.sellUnitPrice = sellUnitPrice;
                 this.purchaseTax = purchaseTax;
                 this.totalPrice = totalPrice;
+                this.quantity = quantity;
             }
         }
 
@@ -236,13 +238,37 @@
                             </td>
                             <td>
                                 <div class="input-group" style = "align:center;">
-                                    <button class="btn btn-danger btn-sm deleteRow" rowId="rowId${selector.rowId}" serialNumber="${selector.serialNumber}"><i class="fa fa-trash-alt"></i></button>
+                                    <button type="button" class="btn btn-danger btn-sm deleteRow" rowId="rowId${selector.rowId}" serialNumber="${selector.serialNumber}"><i class="fa fa-trash-alt"></i></button>
                                 </div>
                             </td>
                     </tr>`;
                 selector.serialNumber ++;
                 selector.rowId++;
                 return data;
+            }
+
+            DeleteColumn(deleteId){
+                let selfThis = this;
+                selector.selectedBook = [];
+                selector.purchaseDetails = [];
+                let htmlData = "";
+                $("#purchaseBookTBody tr").each(function (i, row) {
+                    let iterateRow = row.id;
+                    if (iterateRow != deleteId) {
+                        let bookName = $(this).find("td .productInfo").text();
+                        let bookId = $(this).find("td .productInfo").attr("productId");
+                        let quantityInfo = $(this).find("td .quantityInfo").val();
+                        let unitPrice = $(this).find("td .unitPriceInfo").val();
+                        let vatAndTaxInfo = $(this).find("td .vatAndTaxInfo").val();
+                        let purchasePriceInfo = $(this).find("td .purchasePriceInfo").val();
+                        let sellPriceInfo = $(this).find("td .sellPriceInfo").val();
+                        selector.selectedBook.push(bookId);
+                        let obj = new PurchaseDetail(bookId, quantityInfo, unitPrice, sellPriceInfo, vatAndTaxInfo, purchasePriceInfo);
+                        selector.purchaseDetails.push(obj);
+                        htmlData += selfThis.AddEntryColumn(bookId,bookName,quantityInfo, unitPrice, vatAndTaxInfo, purchasePriceInfo, sellPriceInfo);
+                    }
+                });
+                selector.purchaseBookTBody.html(htmlData);
             }
         }
 
@@ -303,9 +329,10 @@
             if(selector.bookId.val() !== ""){
                 if(selector.selectedBook.length === 0 || process.IsExist(selector.selectedBook, selector.bookId.val()) === -1){
                     selector.selectedBook.push(selector.bookId.val()); // pushing into selected array
-                    let data = htmlProcess.AddEntryColumn(selector.bookId.val(), $("#BookId option:selected").text(), '10.00','200.00', '0', '200.00',250.00);
+                    let data = htmlProcess.AddEntryColumn(selector.bookId.val(), $("#BookId option:selected").text(), '1','1', '0', '1','');
                     let rowCount = selector.purchaseBookTBody.find("tr").length;
                     rowCount > 0 ? $("#purchaseBookTBody tr:first").before(data) : selector.purchaseBookTBody.append(data);
+                    process.CalculatePrice();
                 }
                 else
                     toastr.error("Book is already taken!", "Error!");
@@ -317,12 +344,27 @@
 
         $(document).on("keyup", selector.unitPriceInfo, function(){
             let serialNumber = $(this).attr("serialNumber");
-            process.SpecificRowWisePurchase(serialNumber);
+            if($(this).val() >= 1)
+                process.SpecificRowWisePurchase(serialNumber);
+            else if($(this).val() === ''){
+                
+            }
+            else {
+                $(this).val(1);
+                process.SpecificRowWisePurchase(serialNumber);
+                toastr.error("Unit price can't negative", "Error!");
+            }
         });
 
         $(document).on("keyup", selector.quantityInfo, function(){
             let serialNumber = $(this).attr("serialNumber");
-            process.SpecificRowWisePurchase(serialNumber);
+            if($(this).val() >= 0)
+                process.SpecificRowWisePurchase(serialNumber);
+            else{
+                $(this).val(1);
+                process.SpecificRowWisePurchase(serialNumber);
+                toastr.error("Quantity can't negative", "Error!");
+            }
         });
 
         $(document).on("keyup", selector.vatAndTaxInfo, function(){
@@ -330,11 +372,10 @@
             if($(this).val() >= 0 && $(this).val() <= 20)
                 process.SpecificRowWisePurchase(serialNumber);
             else{
-                toastr.error("Invalid VAT & TAX", "Error!");
+                toastr.error("Invalid VAT & TAX. Range(0-20)%", "Error!");
                 $(this).val(0); 
                 process.SpecificRowWisePurchase(serialNumber);
             }
-                
         });
 
         $(document).on("click", selector.incrementQuantity, function(){
@@ -358,12 +399,62 @@
         });
 
         selector.discountAmount.keyup(function(){
-            if($(this).val() < 0 && $(this).val() > 20)
+            if($(this).val() >= 0 && $(this).val() <= 20)
                 process.CalculatePrice();
+            else if($(this).val() === ''){}
             else{
-                toastr.error("Discount amount can't negative or upper than 20%", "Error!");
+                toastr.error("Discount Amount Range(0-20)%", "Error!");
                 $(this).val(0);
                 process.CalculatePrice();
+            }
+        });
+
+        $(document).on("click", selector.deleteRow , function(){
+            let rowId = $(this).attr("rowId");
+            htmlProcess.DeleteColumn(rowId);
+            process.CalculatePrice();
+        });
+
+        $(document).on("keyup", selector.sellPriceInfo, function(){
+            if($(this).val() <= 0 && $(this).val() !== ''){
+                $(this).val(1);
+                toastr.error("Sell Price can't negative or zero", "Error!");
+            }
+        });
+        
+        selector.bookCreateBtn.click(function(){
+            let isSellUnitPriceOk = true;
+            $(selector.sellPriceInfo).each(function(){
+                if($(this).val() === '')
+                    isSellUnitPriceOk = false;
+            });
+
+            if(selector.supplierId.val() === '')
+                toastr.error("Please select a supplier", "Error!");
+            else if(isSellUnitPriceOk === false)
+                toastr.error("Invalid Sell Unit Price", "Error!");
+            else{
+                htmlProcess.DeleteColumn(-1234345);
+                let jsonData = {
+                    Save: "Save",
+                    InvoiceNumber: selector.invoiceNumber.text(),
+                    SupplierId : selector.supplierId.val(),
+                    SubTotal: selector.subTotal.text(),
+                    Discount: selector.discountAmount.val(),
+                    GrandTotal: selector.grandTotal.text(),
+                    PaidAmount: selector.paidAmount.val(),
+                    Dues: selector.dues.val(),
+                    PaymentMode: selector.paymentMode.val(),
+                    PurchaseDetail: selector.purchaseDetails
+                }
+                let response = ajaxOperation.SavePostAjax("../controller/Purchase.php", jsonData);
+                if(JSON.parse(response) === true){
+                    toastr.success("Purchased Successfully!", "Success!");
+                    location.reload();
+                }
+                else{
+                    toastr.error("Something went wrong!", "Error!");
+                }
             }
         });
 
