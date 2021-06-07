@@ -22,7 +22,7 @@
         <div class="card">
             <div id="headingTwo" class="card-header bg-blue1">
                 <button type="button" data-toggle="collapse" data-target="#" aria-expanded="true" class="text-left m-0 p-0 btn btn-block" style="box-shadow: none;">
-                    <h5 class="m-0 p-0" style="color: #fff;">Admin List</h5>
+                    <h5 class="m-0 p-0" style="color: #fff;">Book List</h5>
                 </button>
             </div>
             <div class="card-body table-responsive">

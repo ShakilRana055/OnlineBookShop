@@ -105,7 +105,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "purchase.php">Purchase</a></li>
-                                    <li><a asp-controller="Inventory" asp-action="PurchaseList">Purchase List</a></li>
+                                    <li><a href = "purchaseList.php">Purchase List</a></li>
                                     <li><a asp-controller="Inventory" asp-action="AccountPay">Accounts Payable</a></li>
                                 </ul>
                             </li>

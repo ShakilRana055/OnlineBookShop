@@ -25,7 +25,7 @@
         $SubTotal = $_POST['SubTotal'];
         $SupplierId = $_POST['SupplierId'];
         $PurchaseDetail = $_POST['PurchaseDetail'];
-        $PurchaseDate = date('d-m-y');
+        $PurchaseDate = date('Y-m-d');
 
         $sqlQuery = "INSERT INTO `purchase`(`InvoiceNumber`, `SupplierId`, `PurchaseDate`, `GrandTotal`, `SubTotal`, `Discount`, `Dues`, `PaymentMode`, `CreatedDate`) 
                     VALUES ('$InvoiceNumber','$SupplierId','$PurchaseDate','$GrandTotal','$SubTotal','$Discount','$Dues','$PaymentMode', '$currentDate')";
