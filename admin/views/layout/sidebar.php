@@ -36,6 +36,7 @@
 
             <div class="main-menu-inner">
                 <div class="menu-body slimscroll">
+                    
                     <div id="menuDashboard" class="main-icon-menu-pane">
                         <div class="title-box">
                             <h6 class="menu-title">Home</h6>
@@ -47,15 +48,17 @@
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                                    <li><a asp-controller="Product" asp-action="Index">Add Product</a></li>
-                                    <li><a asp-controller="Inventory" asp-action="Index">Purchase</a></li>
-                                    <li><a asp-controller="SalesInvoice" asp-action="Index">Add Sale</a></li>
+                                    <li><a href = "index.php">Dashboard</a></li>
+                                    <li><a href = "book.php">Add Book</a></li>
+                                    <li><a href = "purchase.php">Purchase</a></li>
+                                    <!-- <li><a asp-controller="SalesInvoice" asp-action="Index">Add Sale</a></li> -->
                                     <li><a asp-controller="SalesInvoice" asp-action="Top10Sale">Top 10 Sale</a></li>
+                                
                                 </ul>
                             </li>
                         </ul>
                     </div>
+
                     <div id="menuUsers" class="main-icon-menu-pane">
                         <div class="title-box">
                             <h6 class="menu-title">Users</h6>
@@ -106,7 +109,7 @@
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "purchase.php">Purchase</a></li>
                                     <li><a href = "purchaseList.php">Purchase List</a></li>
-                                    <li><a asp-controller="Inventory" asp-action="AccountPay">Accounts Payable</a></li>
+                                    <!-- <li><a asp-controller="Inventory" asp-action="AccountPay">Accounts Payable</a></li> -->
                                 </ul>
                             </li>
                         </ul>
@@ -141,8 +144,8 @@
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="Report" asp-action="StockReport">Stock Report</a></li>
-                                    <li><a asp-controller="Report" asp-action="SupplierReport">Supplier Report</a></li>
+                                    <li><a href = "stockReport.php">Stock Report</a></li>
+                                    <li><a href = "supplierReport.php">Supplier Report</a></li>
                                     <li><a asp-controller="Report" asp-action="CustomerReport">Customer Report</a></li>
                                     <li><a asp-controller="Report" asp-action="RevenueAndLoss">Income Statement</a></li>
                                 </ul>
