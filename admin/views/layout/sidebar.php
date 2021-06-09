@@ -164,9 +164,7 @@
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="Setting" asp-action="SendEmailToSupplier">Email to Supplier</a></li>
-                                    <li><a asp-controller="Setting" asp-action="SendEmailToCustomer">Email to Customer</a></li>
-                                    <li><a asp-controller="Setting" asp-action="ChangePassword">Change Password</a></li>
+                                     <li><a href = "changePassword.php">Change Password</a></li>
                                 </ul>
                             </li>
                         </ul>

@@ -1,7 +1,7 @@
 </div><!-- container -->
 
             <footer class="footer text-center text-sm-left">
-                &copy; <?php echo date('Y-m-d')?> Online Book Shop
+                &copy; <?php echo date('Y')?> Online Book Shop
 
                 <span class="text-muted d-none d-sm-inline-block float-right">Created <i class="mdi mdi-heart text-danger"></i> by Punom & Pritom</span>
             </footer><!--end footer-->

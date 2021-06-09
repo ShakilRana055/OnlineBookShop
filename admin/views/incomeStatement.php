@@ -79,7 +79,7 @@
         (function () {
             let ajaxOperation = new AjaxOperation();
 
-            function GeneratePurchaseInRange(startDate, endDate) {
+            function GeneratePurchaseInRange() {
                 var purchaseList = $("#purchaseBtnIncomeList").dataTable({
                     "processing": true,
                     "serverSide": false,
@@ -92,77 +92,19 @@
                     "columnDefs": [ { "className": "custome", "targets": [0, 1, 2, 3] }],
                 });
             }
-            function GenerateSalesInRange(startDate, endDate) {
-                var purchaseList = $("#salesBtnIncomeList").dataTable({
+            function GenerateSalesInRange() {
+                var salesList = $("#salesBtnIncomeList").dataTable({
                     "processing": true,
-                    "serverSide": true,
+                    "serverSide": false,
                     "filter": true,
                     "pageLength": 10,
                     "autoWidth": false,
                     'dom': "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                     "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
                     "order": [[0, "desc"]],
-                    "ajax": {
-                        "url": "/Report/SalesListInRange/",
-                        "type": "POST",
-                        "data": function (data) {
-                            data.startDate = startDate;
-                            data.endDate = endDate;
-                        },
-                        "complete": function (json) {
-
-                        }
-                    },
-                    "columnDefs": [
-                        { "className": "custome", "targets": [0, 1, 2, 3] },
-                    ],
-                    "columns": [
-                        { "data": "invoiceNumber", "name": "invoiceNumber", "autowidth": true, "orderable": true },
-                        { "data": "customer.name", "name": "customer.name", "autowidth": true, "orderable": true },
-                        { "data": "grandTotal", "name": "grandTotal", "autowidth": true, "orderable": true },
-                        { "data": "paidAmount", "name": "paidAmount", "autowidth": true, "orderable": true },
-                        { "data": "dues", "name": "dues", "autowidth": true, "orderable": true },
-                        { "data": "createdDate", "name": "createdDate", "autowidth": true, "orderable": true },
-                    ],
-                    "footerCallback": function (row, data, start, end, display) {
-                        var api = this.api(), data;
-                        var intVal = function (i) {
-                            return typeof i === 'string' ?
-                                i.replace(/[\$,]/g, '') * 1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-
-                        let column2 = intVal;
-                        let column3 = intVal;
-                        let column4 = intVal;
-
-                        let grandTotal = api
-                            .column(2)
-                            .data()
-                            .reduce(function (a, b) {
-                                return column2(a) + column2(b);
-                            }, 0);
-
-                        let paidAmount = api
-                            .column(3)
-                            .data()
-                            .reduce(function (a, b) {
-                                return column3(a) + column3(b);
-                            }, 0);
-
-                        let duesAmount = api
-                            .column(4)
-                            .data()
-                            .reduce(function (a, b) {
-                                return column4(a) + column4(b);
-                            }, 0);
-
-                        $(api.column(2).footer()).html("= " + grandTotal + "/-");
-                        $(api.column(3).footer()).html("= " + paidAmount + "/-");
-                        $(api.column(4).footer()).html("= " + duesAmount + "/-");
-                    }
+                    "columnDefs": [{ "className": "custome", "targets": [0, 1, 2, 3] },],
                 });
+                    
             }
 
             let selector = {
@@ -194,7 +136,7 @@
                     selector.incomeStatement = htmlData;
                     $("#firstIncomeBtn").click();
                     GeneratePurchaseInRange();
-                    //GenerateSalesInRange(jsonData.startDate, jsonData.endDate);
+                    GenerateSalesInRange();
                 }
                 else {
                     toastr.error("Fill Up the Range!", "Error");

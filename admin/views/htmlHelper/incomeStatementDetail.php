@@ -75,7 +75,7 @@
                         <td width="20%"></td>
                         <td>
                             <h3 style="font-weight: 900;">Income Statement</h3><br />
-                            <h6 style="margin-top: -21px;font-size: 9px;">Date. <b id="invoiceNumber"><?php echo date('m-d-Y');?></b></h6>
+                            <h6 style="margin-top: -21px;font-size: 9px;">Date. <b id="invoiceNumber"><?php echo date('d-M-Y');?></b></h6>
                         </td>
                     </tr>
                     <tr>
@@ -92,19 +92,19 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td style=" width: 20% !important;">Total Sales</td>
+                            <td style=" width: 20% !important; text-align:center;">Total Sales</td>
                             <td style=" width: 40% !important;"></td>
-                            <td style=" width: 20% !important;"><?php echo number_format($salesResult['GrandTotal'], 2, '.', ',');?></td>
+                            <td style=" width: 20% !important; text-align:right;"><?php echo number_format($salesResult['GrandTotal'], 2, '.', ',');?>/-</td>
                         </tr>
                         
                         <tr>
-                            <td style=" width: 20% !important;">Total Purchase</td>
+                            <td style=" width: 20% !important; text-align:center;">Total Purchase</td>
                             <td style=" width: 40% !important;"></td>
-                            <td style=" width: 20% !important;"><?php echo number_format($purchaseResult['GrandTotal'], 2, '.', ',');?></td>
+                            <td style=" width: 20% !important; text-align:right;"><?php echo number_format($purchaseResult['GrandTotal'], 2, '.', ',');?>/-</td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="text-align:right;">Net Income</td>
-                            <td><?php echo number_format($salesResult['GrandTotal'] - $purchaseResult['GrandTotal'], 2, '.', ',');?></td>
+                            <td colspan="2" style="text-align:right;">@Net Income</td>
+                            <td style="text-align:right;"><?php echo number_format($salesResult['GrandTotal'] - $purchaseResult['GrandTotal'], 2, '.', ',');?>/-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -128,9 +128,9 @@
             </thead>
             <tbody>
                 <?php
-                $purchaseSubTotal = 0;
-                $purchaseGrandTotal = 0;
-                $purchaseDues = 0;
+                    $purchaseSubTotal = 0;
+                    $purchaseGrandTotal = 0;
+                    $purchaseDues = 0;
                     $purchaseInvoice = "SELECT p.*, sp.Name
                             FROM purchase p
                             INNER JOIN supplier sp ON sp.Id = p.SupplierId
@@ -172,20 +172,51 @@
                 <tr>
                     <th style="text-align:center;">Invoice No.</th>
                     <th style="text-align:center;">Customer Name</th>
+                    <th style="text-align:center;">Sub Total</th>
                     <th style="text-align:center;">Grand Total</th>
-                    <th style="text-align:center;">Paid Amount</th>
                     <th style="text-align:center;">Dues</th>
                     <th style="text-align:center;">Date</th>
                 </tr>
             </thead>
             <tbody>
+                <?php 
+                    $salesSubTotal = 0;
+                    $salesGrandTotal = 0;
+                    $salesDues = 0;
+                    $salesInvoiceQuery = "SELECT i.*, u.Name
+                            FROM invoice i
+                            INNER JOIN users u on u.Id = i.UserId
+                            WHERE InvoiceDate BETWEEN '$startDate' AND '$endDate'";
+
+                    $salesInvoiceResult = mysqli_query($con, $salesInvoiceQuery);
+                    while($row = mysqli_fetch_assoc($salesInvoiceResult)){
+                        $invoiceNumber = $row['InvoiceNumber']; $name = $row['Name'];
+                        $grandTotal = $row['GrandTotal']; $subTotal = $row['SubTotal']; 
+                        $dues = $row['Dues']; $date = $row['InvoiceDate'];
+
+                        $salesSubTotal += $subTotal;
+                        $salesGrandTotal += $grandTotal;
+                        $salesDues += $dues;
+
+                        echo "<tr>
+                                <td>".$invoiceNumber."</td>
+                                <td>".$name."</td>
+                                <td>".number_format($subTotal, 2, '.', ',')."</td>
+                                <td>".number_format($grandTotal, 2, '.', ',')."</td>
+                                <td>".number_format($dues, 2, '.', ',')."</td>
+                                <td>".$date."</td>
+                            </tr>";
+                    }
+                ?>
+
+
             </tbody>
             <tfoot>
                 <tr style="background-color:coral;">
                     <td colspan="2" style="text-align:right;">Total</td>
-                    <td style="text-align:right;"></td>
-                    <td style="text-align:right;"></td>
-                    <td style="text-align:right;"></td>
+                    <td style="text-align:right;"><?php echo number_format($salesSubTotal, 2, '.', ',');?></td>
+                    <td style="text-align:right;"><?php echo number_format($salesGrandTotal, 2, '.', ',');?></td>
+                    <td style="text-align:right;"><?php echo number_format($salesDues, 2, '.', ',');?></td>
                     <td></td>
                 </tr>
             </tfoot>

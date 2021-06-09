@@ -1,4 +1,5 @@
-<?php session_start();?>
+<?php session_start();
+?>
 <?php include("../../connection/DatabaseConnection.php");?>
 <!DOCTYPE html>
 <html>
@@ -51,7 +52,7 @@
 
         <!-- LOGO -->
         <div class="topbar-left">
-            <a href="/Dashboard/Index" class="logo">
+            <a href="index.php" class="logo">
             <h4 style = "color: purple; font-weight: 900; margin-bottom:0px !important">Online Book Shop</h4>
                 <span>
                 <img src="../public/layout/assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
@@ -109,8 +110,8 @@
                         <span class="ml-1 nav-user-name hidden-sm" id="userName"> <?php echo $_SESSION['user']['Name'];?><i class="mdi mdi-chevron-down"></i> </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        
-                        <a asp-action="LogOut" asp-controller="Login" class="dropdown-item"><i class="dripicons-exit text-muted mr-2"></i> Logout</a>
+                        <a href = "../logout.php" class="dropdown-item">
+                        <i class="dripicons-exit text-muted mr-2"></i> Logout</a>
                     </div>
                 </li>
 
