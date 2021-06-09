@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2021 at 01:39 PM
+-- Generation Time: Jun 09, 2021 at 03:08 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -42,7 +42,9 @@ INSERT INTO `authors` (`Id`, `Name`, `CreatedDate`) VALUES
 (1, 'Md Shakil Rana', '2021-06-02 17:58:01'),
 (2, 'Sumaiya Konica ', '2021-06-02 17:35:18'),
 (3, 'Prisila Punom', '2021-06-02 17:52:19'),
-(5, 'Test', '2021-06-02 17:40:32');
+(5, 'Test', '2021-06-02 17:40:32'),
+(7, 'after adding', '2021-06-02 21:41:18'),
+(8, 'Herbert Schield', '2021-06-06 06:29:08');
 
 -- --------------------------------------------------------
 
@@ -63,6 +65,15 @@ CREATE TABLE `books` (
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `books`
+--
+
+INSERT INTO `books` (`Id`, `Name`, `WarningQuantity`, `PhotoUrl`, `Description`, `AuthorId`, `CategoryId`, `SubCategoryId`, `PublicationId`, `CreatedDate`) VALUES
+(1, 'C Programming', 100, '../public/image/1622730170book.jpg', 'C Programming', 8, 3, 3, 7, '2021-06-03 07:56:51'),
+(2, 'C# Programming', 10, '', 'C# ', 1, 3, 3, 7, '2021-06-06 06:17:10'),
+(3, 'Organic Chemistry', 10, '../public/image/1623112882book.jpg', 'organic chemistry', 5, 4, 4, 2, '2021-06-08 06:22:41');
+
 -- --------------------------------------------------------
 
 --
@@ -74,6 +85,16 @@ CREATE TABLE `category` (
   `Name` varchar(255) DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`Id`, `Name`, `CreatedDate`) VALUES
+(1, 'Electronics', '2021-06-02 21:07:38'),
+(2, 'Comics', '2021-06-02 21:16:38'),
+(3, 'CSE', '2021-06-06 06:00:09'),
+(4, 'Science', '2021-06-08 06:56:39');
 
 -- --------------------------------------------------------
 
@@ -90,6 +111,13 @@ CREATE TABLE `companyinformation` (
   `Slogan` varchar(255) DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `companyinformation`
+--
+
+INSERT INTO `companyinformation` (`Id`, `Name`, `Email`, `Address`, `LogoUrl`, `Slogan`, `CreatedDate`) VALUES
+(1, 'Online Book Shop', 'someemail@gmail.com', 'Dhaka, Bangladesh', '', 'Define, Ultimate', '2021-06-07 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -140,6 +168,17 @@ CREATE TABLE `publications` (
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `publications`
+--
+
+INSERT INTO `publications` (`Id`, `Name`, `Remarks`, `CreatedDate`) VALUES
+(2, 'Panjaree', NULL, '2021-06-02 21:05:13'),
+(3, 'delete me', NULL, '2021-06-02 21:31:13'),
+(4, 'Lecture', NULL, '2021-06-02 21:14:20'),
+(6, 'Adil', NULL, '2021-06-02 21:30:20'),
+(7, 'Schaums Series', NULL, '2021-06-06 06:38:08');
+
 -- --------------------------------------------------------
 
 --
@@ -150,7 +189,7 @@ CREATE TABLE `purchase` (
   `Id` int(11) NOT NULL,
   `InvoiceNumber` varchar(50) DEFAULT NULL,
   `SupplierId` int(11) DEFAULT NULL,
-  `PurchaseDate` datetime DEFAULT NULL,
+  `PurchaseDate` date DEFAULT NULL,
   `GrandTotal` float DEFAULT NULL,
   `SubTotal` float DEFAULT NULL,
   `Discount` float DEFAULT NULL,
@@ -158,6 +197,17 @@ CREATE TABLE `purchase` (
   `PaymentMode` varchar(30) DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchase`
+--
+
+INSERT INTO `purchase` (`Id`, `InvoiceNumber`, `SupplierId`, `PurchaseDate`, `GrandTotal`, `SubTotal`, `Discount`, `Dues`, `PaymentMode`, `CreatedDate`) VALUES
+(1, 'PUR-000001', 1, '2021-06-07', 999.6, 1020, 2, 0, 'Cash', '2021-06-07 12:28:09'),
+(2, 'PUR-000002', 1, '2021-06-07', 816, 816, 0, 0, 'Cash', '2021-06-07 12:00:13'),
+(3, 'PUR-000003', 5, '2021-06-07', 3500, 3500, 0, 0, 'Card', '2021-06-07 12:16:18'),
+(4, 'PUR-000004', 11, '2021-06-07', 350, 350, 0, 0, 'Mobile Banking', '2021-06-07 12:34:19'),
+(5, 'PUR-000005', 7, '2021-06-08', 10000, 10000, 0, 0, 'Cash', '2021-06-08 06:20:42');
 
 -- --------------------------------------------------------
 
@@ -177,6 +227,17 @@ CREATE TABLE `purchasedetail` (
   `TotalPrice` float DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchasedetail`
+--
+
+INSERT INTO `purchasedetail` (`Id`, `PurchaseId`, `BookId`, `Quantity`, `PurchaseUnitPrice`, `SellUnitPrice`, `PurchaseTax`, `SellTax`, `TotalPrice`, `CreatedDate`) VALUES
+(1, 1, 2, 10, 100, 120, 2, NULL, 1020, '2021-06-07 12:28:09'),
+(2, 2, 2, 8, 102, 120, 0, NULL, 816, '2021-06-07 12:00:13'),
+(3, 3, 1, 10, 350, 375, 0, NULL, 3500, '2021-06-07 12:16:18'),
+(4, 4, 1, 1, 350, 375, 0, NULL, 350, '2021-06-07 12:34:19'),
+(5, 5, 3, 40, 250, 275, 0, NULL, 10000, '2021-06-08 06:20:42');
 
 -- --------------------------------------------------------
 
@@ -206,6 +267,15 @@ CREATE TABLE `stock` (
   `UpdatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`Id`, `BookId`, `Quantity`, `UnitPrice`, `UpdatedDate`) VALUES
+(1, 2, 18, 120, '2021-06-07 12:00:13'),
+(2, 1, 11, 375, '2021-06-07 12:34:19'),
+(3, 3, 40, 275, '2021-06-08 06:20:42');
+
 -- --------------------------------------------------------
 
 --
@@ -217,6 +287,16 @@ CREATE TABLE `subcategory` (
   `Name` varchar(255) DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `subcategory`
+--
+
+INSERT INTO `subcategory` (`Id`, `Name`, `CreatedDate`) VALUES
+(1, 'Laptop', '2021-06-02 21:23:38'),
+(2, 'Mobile', '2021-06-02 21:28:38'),
+(3, 'Programming', '2021-06-06 06:06:09'),
+(4, 'Chemistry', '2021-06-08 06:06:40');
 
 -- --------------------------------------------------------
 
@@ -248,7 +328,7 @@ INSERT INTO `supplier` (`Id`, `Name`, `Phone`, `Email`, `Address`, `PhotoUrl`, `
 (7, 'sajib', '4353', 'safdsf', 'afdfdsf', '', 'dsfdsf', 'dsfdsfdsf', '2021-05-31 21:53:58'),
 (11, 'validation', '32343', 'email@gmail.com', 'some address', '', '', '', '2021-06-01 07:06:21'),
 (13, 'fdsfdsf', '323434', 'sfdsf@gmail.com', 'sdfdf', '', 'dsfdsf', 'dsfdfdsf', '2021-06-01 07:41:29'),
-(14, 'dfdsgdg', '', 'fgfhfh@gmail.com', '', '', '', '', '2021-06-01 19:17:58');
+(14, 'dfdsgdg', '123', 'fgfhfh@gmail.com', '', '', '', '', '2021-06-01 19:17:58');
 
 -- --------------------------------------------------------
 
@@ -380,25 +460,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `companyinformation`
 --
 ALTER TABLE `companyinformation`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `invoice`
@@ -416,19 +496,19 @@ ALTER TABLE `invoicedetail`
 -- AUTO_INCREMENT for table `publications`
 --
 ALTER TABLE `publications`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `purchasedetail`
 --
 ALTER TABLE `purchasedetail`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `shipment`
@@ -440,13 +520,13 @@ ALTER TABLE `shipment`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subcategory`
 --
 ALTER TABLE `subcategory`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `supplier`

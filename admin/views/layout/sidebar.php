@@ -52,7 +52,7 @@
                                     <li><a href = "book.php">Add Book</a></li>
                                     <li><a href = "purchase.php">Purchase</a></li>
                                     <!-- <li><a asp-controller="SalesInvoice" asp-action="Index">Add Sale</a></li> -->
-                                    <li><a asp-controller="SalesInvoice" asp-action="Top10Sale">Top 10 Sale</a></li>
+                                    <!-- <li><a asp-controller="SalesInvoice" asp-action="Top10Sale">Top 10 Sale</a></li> -->
                                 
                                 </ul>
                             </li>
@@ -147,7 +147,7 @@
                                     <li><a href = "stockReport.php">Stock Report</a></li>
                                     <li><a href = "supplierReport.php">Supplier Report</a></li>
                                     <li><a asp-controller="Report" asp-action="CustomerReport">Customer Report</a></li>
-                                    <li><a asp-controller="Report" asp-action="RevenueAndLoss">Income Statement</a></li>
+                                    <li><a href = "incomeStatement.php">Income Statement</a></li>
                                 </ul>
                             </li>
                         </ul>

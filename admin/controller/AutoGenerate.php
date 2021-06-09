@@ -24,5 +24,5 @@
             return $purchaseNumber;
         }
     }
-   // echo AutoGenerate::InvoiceNumber("PUR-1", "PUR-");
+   //echo AutoGenerate::InvoiceNumber("PUR-1", "PUR-");
 ?>
