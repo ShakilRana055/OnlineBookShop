@@ -14,8 +14,8 @@
                     <div class="single_widget_area">
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
-                            <a href="index.html">
-                                <img src="../public/img/core-img/logo2.png" alt=""></a>
+                            <a href="index.php">
+                                <img src="../../admin/views/htmlHelper/bookShop.jpg" alt=""></a>
                         </div>
                         <!-- Copywrite Text -->
                         <p class="copywrite">                       
@@ -33,10 +33,10 @@
                                 <div class="collapse navbar-collapse" id="footerNavContent">
                                     <ul class="navbar-nav ml-auto">
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="index.html">Home</a>
+                                            <a class="nav-link" href="index.php">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="shop.html">Shop</a>
+                                            <a class="nav-link" href="shop.php">Shop</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="product-details.html">Product</a>
