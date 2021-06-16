@@ -1,5 +1,6 @@
    <!-- ##### Main Content Wrapper Start ##### -->
-<div class="main-content-wrapper d-flex clearfix" style = "background-color: #ffe6cc;">
+   <!-- style = "background-color: #ffe6cc;" -->
+<div class="main-content-wrapper d-flex clearfix">
 
 <!-- Mobile Nav (max width 767px)-->
 <div class="mobile-nav">
@@ -14,7 +15,8 @@
 </div>
 
 <!-- Header Area Start -->
-<header class="header-area clearfix" style = "background-color: #ccccff;" >
+<!-- style = "background-color: #ccccff;" -->
+<header class="header-area clearfix"  >
     <!-- Close Icon -->
     <div class="nav-close">
         <i class="fa fa-close" aria-hidden="true"></i>
