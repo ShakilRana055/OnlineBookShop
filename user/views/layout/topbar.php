@@ -21,7 +21,10 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="../public/css/core-style.css">
     <link rel="stylesheet" href="../public/style.css">
-
+    <!-- Data Table -->
+    <link href="../../admin/public/layout/lib/DataTables/datatables.min.css" rel="stylesheet" />
+    <link href="../../admin/public/layout/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
 </head>
 
 <body>

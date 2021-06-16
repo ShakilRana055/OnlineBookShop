@@ -1,5 +1,5 @@
    <!-- ##### Main Content Wrapper Start ##### -->
-   <div class="main-content-wrapper d-flex clearfix">
+<div class="main-content-wrapper d-flex clearfix" style = "background-color: #ffe6cc;">
 
 <!-- Mobile Nav (max width 767px)-->
 <div class="mobile-nav">
@@ -14,7 +14,7 @@
 </div>
 
 <!-- Header Area Start -->
-<header class="header-area clearfix">
+<header class="header-area clearfix" style = "background-color: #ccccff;" >
     <!-- Close Icon -->
     <div class="nav-close">
         <i class="fa fa-close" aria-hidden="true"></i>
@@ -36,8 +36,7 @@
     </nav>
     <!-- Button Group -->
     <div class="amado-btn-group mt-30 mb-100">
-        <!-- <a href="#" class="btn amado-btn mb-15">%Discount%</a> -->
-        <a href="#" class="btn amado-btn active">New this week</a>
+        <a href="newCollection.php" class="btn amado-btn mb-15 active">New this week</a>
     </div>
     <!-- Cart Menu -->
     <div class="cart-fav-search mb-100">

@@ -1,10 +1,6 @@
 </div>
     <!-- ##### Main Content Wrapper End ##### -->
 
-    <!-- ##### Newsletter Area Start ##### -->
-    
-    <!-- ##### Newsletter Area End ##### -->
-
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
         <div class="container">
@@ -15,7 +11,7 @@
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
                             <a href="index.php">
-                                <img src="../../admin/views/htmlHelper/bookShop.jpg" alt=""></a>
+                                <img src="../../admin/views/htmlHelper/bookShop.jpg" height = "50" width ="50" alt=""></a>
                         </div>
                         <!-- Copywrite Text -->
                         <p class="copywrite">                       
@@ -69,6 +65,8 @@
     <!-- Active js -->
     <script src="../public/js/active.js"></script>
 
+    <!--DataTable Js -->
+    <script src="../../admin/public/layout/lib/DataTables/datatables.min.js"></script>
 </body>
 
 </html>

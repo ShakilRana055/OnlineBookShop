@@ -20,7 +20,7 @@
             
             if($Photo != null){
                 $convertedPhotoName = time()."book.".$photoName[1];
-                $PhotoUrl = "../public/image/".$convertedPhotoName;
+                $PhotoUrl = "../../public/image/".$convertedPhotoName;
             }
             
             $sql = "INSERT INTO `books`(`Name`, `WarningQuantity`, `PhotoUrl`, `Description`, `AuthorId`, `CategoryId`, `SubCategoryId`, `PublicationId`, `CreatedDate`) 
@@ -62,7 +62,7 @@
             
             if($Photo != null){
                 $convertedPhotoName = time()."book.".$photoName[1];
-                $PhotoUrl = "../public/image/".$convertedPhotoName;
+                $PhotoUrl = "../../public/image/".$convertedPhotoName;
 
                 $sql = "UPDATE `books` SET `Name`= '$Name',`WarningQuantity`= '$WarningQuantity',`PhotoUrl`='$PhotoUrl',
                 `Description`= '$Description',`AuthorId`='$AuthorId',`CategoryId`='$CategoryId',

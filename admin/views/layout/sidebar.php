@@ -147,7 +147,11 @@
                                     <li><a href = "stockReport.php">Stock Report</a></li>
                                     <li><a href = "supplierReport.php">Supplier Report</a></li>
                                     <li><a asp-controller="Report" asp-action="CustomerReport">Customer Report</a></li>
-                                    <li><a href = "incomeStatement.php">Income Statement</a></li>
+                                    <?php 
+                                        if($_SESSION['user']['UserType'] == "SuperAdmin"){
+                                        ?>
+                                        <li><a href = "incomeStatement.php">Income Statement</a></li>
+                                    <?php }?>
                                 </ul>
                             </li>
                         </ul>
