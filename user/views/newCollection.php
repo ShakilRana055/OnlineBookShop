@@ -13,7 +13,7 @@
                 $sql = "SELECT s.*, b.Name, b.PhotoUrl, b.Id BookId, b.Description
                         FROM stock s 
                         INNER JOIN books b ON s.BookId = b.Id
-                        WHERE s.UpdatedDate BETWEEN CURRENT_DATE - 15 AND CURRENT_DATE";
+                        WHERE s.UpdatedDate BETWEEN CURRENT_DATE - 6 AND CURRENT_DATE";
                 $result = mysqli_query($con, $sql);
                 $count = 1;
                 while($row = mysqli_fetch_assoc($result))
