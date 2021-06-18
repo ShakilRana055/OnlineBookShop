@@ -93,27 +93,21 @@
                     $UnitPrice = $row['UnitPrice'];
                     $name = $row['Name'];
                     $description = $row['Description'];
+                    $BookId = $row['BookId'];
                     ?>
-                        <div class="col-md-3" style= "margin-bottom: 10px !important; height : 50px !important;">
+                        <div class="col-md-3">
                             <div class="card">
                                 <img src="<?php echo $photoUrl;?>" alt="No Image" style="width:100%; height: 100px;">
                                 <h6><?php echo substr((string)$name,0, 13);?></h6>
-                                <p class="">৳: <?php echo $UnitPrice;?></p>
+                                <p class="price">৳: <?php echo $UnitPrice;?></p>
                                 
-                                <a href="cart.html" data-toggle="tooltip"title="Add to Cart">
-                                <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
+                                <p>
+                                    <a href="bookDetail.php?bookId=<?php echo $BookId;?>" data-toggle="tooltip"title="Detail">
+                                    <img src="../public/img/core-img/info.png" height = "30" width = "30" alt=""></a>
                                 
-                            </div>
-                        </div>
-                        <div class="col-md-3" style= "margin-bottom: 10px !important; height : 50px !important;">
-                            <div class="card">
-                                <img src="<?php echo $photoUrl;?>" alt="No Image" style="width:100%; height: 100px;">
-                                <h6><?php echo substr((string)$name,0, 13);?></h6>
-                                <p class="">৳: <?php echo $UnitPrice;?></p>
-                                
-                                <a href="cart.html" data-toggle="tooltip"title="Add to Cart">
-                                <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
-                                
+                                    <a class = "addToCart" bookId = "<?php echo $BookId;?>" title="Add to Cart">
+                                    <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
+                                </p>
                             </div>
                         </div>
                     <?php
@@ -122,6 +116,34 @@
         </div>
     </div>
 </div>
-           
 
 <?php include("layout/footer.php");?>
+
+
+<script>
+    (function(){
+        let ajaxOperation = new AjaxOperation();
+        let selector = {
+            addToCart: ".addToCart",
+        }
+        function AddToCart(bookId)
+        {
+            let response = ajaxOperation.GetAjaxByValue("../controller/Shop.php", bookId);
+            
+            if(response == "login"){
+                //something to do
+            }
+            else if( response == "success"){
+                // something to do
+            }
+            else if(response == "error"){
+                //something to do
+            }  
+        }
+        $(document).on("click", selector.addToCart, function(){
+            let bookId = $(this).attr("bookId");
+            //AddToCart(bookId);
+            // console.log(bookId);
+        });
+    })();
+</script>

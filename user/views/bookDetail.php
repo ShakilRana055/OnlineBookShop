@@ -6,7 +6,7 @@
 
 <?php
     $bookId = $_GET['bookId'];
-    $sqlQuery = "SELECT b.*, p.Name PublicationName, c.Name CategoryName, s.Name SubCategoryName, st.Quantity, st.UnitPrice
+    $sqlQuery = "SELECT b.*, a.Name AuthorName, p.Name PublicationName, c.Name CategoryName, s.Name SubCategoryName, st.Quantity, st.UnitPrice
                 FROM books b
                 INNER JOIN authors a ON b.AuthorId = a.Id
                 INNER JOIN publications p ON p.Id = b.PublicationId
@@ -61,12 +61,16 @@
                                     <?php echo $queryResult['Quantity'] > 0 ? "Available": "Not Available";?>
                                 </p>
                             </div>
-
+                            <div class="short_overview my-5">
+                                <p>Author: <?php echo $queryResult['AuthorName'];?></p>
+                                <p>Publication: <?php echo $queryResult['PublicationName'];?></p>
+                                <p>Category: <?php echo $queryResult['CategoryName'];?></p>
+                                <p>Sub-Category: <?php echo $queryResult['SubCategoryName'];?></p>
+                               
+                            </div>
                             <div class="short_overview my-5">
                                 <p><?php echo $queryResult['Description'];?></p>
                             </div>
-
-                            <!-- Add to Cart Form -->
                             <form class="cart clearfix" method="post">
                                 <div class="cart-btn d-flex mb-50">
                                     <p>Qty</p>
@@ -78,7 +82,6 @@
                                 </div>
                                 <button type="submit" title = "Add to Cart" name="addtocart" value="5" class="btn btn-success btn-lg btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
                             </form>
-
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 09, 2021 at 03:08 AM
+-- Generation Time: Jun 18, 2021 at 05:28 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -70,9 +70,11 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`Id`, `Name`, `WarningQuantity`, `PhotoUrl`, `Description`, `AuthorId`, `CategoryId`, `SubCategoryId`, `PublicationId`, `CreatedDate`) VALUES
-(1, 'C Programming', 100, '../public/image/1622730170book.jpg', 'C Programming', 8, 3, 3, 7, '2021-06-03 07:56:51'),
-(2, 'C# Programming', 10, '', 'C# ', 1, 3, 3, 7, '2021-06-06 06:17:10'),
-(3, 'Organic Chemistry', 10, '../public/image/1623112882book.jpg', 'organic chemistry', 5, 4, 4, 2, '2021-06-08 06:22:41');
+(1, 'C Programming', 100, '../../public/image/1622730170book.jpg', 'C Programming', 8, 3, 3, 7, '2021-06-03 07:56:51'),
+(2, 'C# Programming', 10, '../../public/image/1623670096book.jpg', 'According to The American Heritage Dictionary of the English Language and Banglapedia, the word taka came from Sanskrit word tankah. Another hypothesis is that the word is derived from a Turkic', 1, 3, 3, 7, '2021-06-06 06:17:10'),
+(3, 'Organic Chemistry', 10, '../../public/image/1623112882book.jpg', 'organic chemistry', 5, 4, 4, 2, '2021-06-08 06:22:41'),
+(4, 'Harry Potter', 10, '../../public/image/1623338103book.jpg', 'Harry potter image', 3, 2, 2, 2, '2021-06-10 21:03:15'),
+(5, 'Computer Series', 10, '../../public/image/1623911614book.PNG', 'some description', 8, 2, 3, 2, '2021-06-17 12:34:33');
 
 -- --------------------------------------------------------
 
@@ -207,7 +209,9 @@ INSERT INTO `purchase` (`Id`, `InvoiceNumber`, `SupplierId`, `PurchaseDate`, `Gr
 (2, 'PUR-000002', 1, '2021-06-07', 816, 816, 0, 0, 'Cash', '2021-06-07 12:00:13'),
 (3, 'PUR-000003', 5, '2021-06-07', 3500, 3500, 0, 0, 'Card', '2021-06-07 12:16:18'),
 (4, 'PUR-000004', 11, '2021-06-07', 350, 350, 0, 0, 'Mobile Banking', '2021-06-07 12:34:19'),
-(5, 'PUR-000005', 7, '2021-06-08', 10000, 10000, 0, 0, 'Cash', '2021-06-08 06:20:42');
+(5, 'PUR-000005', 7, '2021-06-08', 10000, 10000, 0, 0, 'Cash', '2021-06-08 06:20:42'),
+(6, 'PUR-000006', 5, '2021-06-10', 9000, 9000, 0, 0, 'Cash', '2021-06-10 21:23:22'),
+(7, 'PUR-000007', 7, '2021-06-17', 11500, 11500, 0, 0, 'Cash', '2021-06-17 12:58:33');
 
 -- --------------------------------------------------------
 
@@ -237,7 +241,9 @@ INSERT INTO `purchasedetail` (`Id`, `PurchaseId`, `BookId`, `Quantity`, `Purchas
 (2, 2, 2, 8, 102, 120, 0, NULL, 816, '2021-06-07 12:00:13'),
 (3, 3, 1, 10, 350, 375, 0, NULL, 3500, '2021-06-07 12:16:18'),
 (4, 4, 1, 1, 350, 375, 0, NULL, 350, '2021-06-07 12:34:19'),
-(5, 5, 3, 40, 250, 275, 0, NULL, 10000, '2021-06-08 06:20:42');
+(5, 5, 3, 40, 250, 275, 0, NULL, 10000, '2021-06-08 06:20:42'),
+(6, 6, 4, 45, 200, 250, 0, NULL, 9000, '2021-06-10 21:23:22'),
+(7, 7, 5, 50, 230, 235, 0, NULL, 11500, '2021-06-17 12:58:33');
 
 -- --------------------------------------------------------
 
@@ -272,9 +278,11 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`Id`, `BookId`, `Quantity`, `UnitPrice`, `UpdatedDate`) VALUES
-(1, 2, 18, 120, '2021-06-07 12:00:13'),
-(2, 1, 11, 375, '2021-06-07 12:34:19'),
-(3, 3, 40, 275, '2021-06-08 06:20:42');
+(1, 2, 18, 120, '2021-06-07 00:00:00'),
+(2, 1, 11, 375, '2021-06-07 00:00:00'),
+(3, 3, 40, 275, '2021-06-08 00:00:00'),
+(4, 4, 45, 250, '2021-06-10 00:00:00'),
+(5, 5, 50, 235, '2021-06-16 12:58:33');
 
 -- --------------------------------------------------------
 
@@ -326,9 +334,24 @@ INSERT INTO `supplier` (`Id`, `Name`, `Phone`, `Email`, `Address`, `PhotoUrl`, `
 (4, 'dataTable', '013434', 'datatable@gmail.com', 'adsdsds', '', 'dsfdf', 'dsfdsf', '2021-05-31 20:49:19'),
 (5, 'knka freeze', '3454', 'konka@gmail.com', 'Manikgonj', '', 'some', 'Engineer', '2021-05-31 21:43:28'),
 (7, 'sajib', '4353', 'safdsf', 'afdfdsf', '', 'dsfdsf', 'dsfdsfdsf', '2021-05-31 21:53:58'),
-(11, 'validation', '32343', 'email@gmail.com', 'some address', '', '', '', '2021-06-01 07:06:21'),
+(11, 'validation 1', '323433', 'email@gmail.com', 'some address', '', '', '', '2021-06-01 07:06:21'),
 (13, 'fdsfdsf', '323434', 'sfdsf@gmail.com', 'sdfdf', '', 'dsfdsf', 'dsfdfdsf', '2021-06-01 07:41:29'),
 (14, 'dfdsgdg', '123', 'fgfhfh@gmail.com', '', '', '', '', '2021-06-01 19:17:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `temporder`
+--
+
+CREATE TABLE `temporder` (
+  `Id` int(11) NOT NULL,
+  `InvoiceNumber` varchar(15) NOT NULL,
+  `UserId` int(11) NOT NULL,
+  `BookId` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `CreatedDate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -355,10 +378,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`Id`, `Name`, `Email`, `Phone`, `Address`, `OutsideCity`, `Password`, `PhotoUrl`, `UserType`, `CreatedDate`) VALUES
 (1, 'Super Admin', 'superadmin@gmail.com', '123', 'Kaliakoir', NULL, 'b715f831f1fee468d6b1760226035b29', '../public/layout/images/superadmin.jpg', 'SuperAdmin', '2021-05-29 14:01:13'),
-(15, 'public', 'public@gmail.com', '123445456', 'some address', NULL, '202cb962ac59075b964b07152d234b70', '../public/image/1622624336admin.png', 'Admin', '2021-06-02 06:29:25'),
-(16, 'without photo', 'whitout@gmail.com', '123', '123', NULL, '202cb962ac59075b964b07152d234b70', '', 'Admin', '2021-06-02 06:07:32'),
-(17, 'Shakil Rana', 'skl@gmail.com', '435435', 'kaliakoir', NULL, '202cb962ac59075b964b07152d234b70', '../public/image/1622623459admin.png', 'Admin', '2021-06-02 14:19:44'),
-(19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07');
+(15, 'public', 'public@gmail.com', '123445456', 'some address', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624336admin.png', 'Admin', '2021-06-02 06:29:25'),
+(16, 'without photo', 'whitout@gmail.com', '123', '12345', NULL, '202cb962ac59075b964b07152d234b70', '', 'Admin', '2021-06-02 06:07:32'),
+(17, 'Shakil Rana', 'skl@gmail.com', '435435', 'kaliakoir', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622623459admin.png', 'Admin', '2021-06-02 14:19:44'),
+(19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07');
 
 --
 -- Indexes for dumped tables
@@ -446,6 +469,12 @@ ALTER TABLE `supplier`
   ADD UNIQUE KEY `Phone` (`Phone`);
 
 --
+-- Indexes for table `temporder`
+--
+ALTER TABLE `temporder`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -466,7 +495,7 @@ ALTER TABLE `authors`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -502,13 +531,13 @@ ALTER TABLE `publications`
 -- AUTO_INCREMENT for table `purchase`
 --
 ALTER TABLE `purchase`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `purchasedetail`
 --
 ALTER TABLE `purchasedetail`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `shipment`
@@ -520,7 +549,7 @@ ALTER TABLE `shipment`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `subcategory`
@@ -533,6 +562,12 @@ ALTER TABLE `subcategory`
 --
 ALTER TABLE `supplier`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `temporder`
+--
+ALTER TABLE `temporder`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

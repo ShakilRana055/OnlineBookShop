@@ -67,6 +67,7 @@
 
     <!--DataTable Js -->
     <script src="../../admin/public/layout/lib/DataTables/datatables.min.js"></script>
+    <script src = "../../ajax-library/AjaxOperation.js"></script>
 </body>
 
 </html>
