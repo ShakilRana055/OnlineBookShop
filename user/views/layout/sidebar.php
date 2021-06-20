@@ -33,7 +33,7 @@
             <li><a href="shop.php">Shop</a></li>
             <li><a href="product-details.html">Product</a></li>
             <li><a href="cart.html">Cart</a></li>
-            <li><a href="checkout.html">Checkout</a></li>
+            <li><a href="customerRegistration.php">Registration</a></li>
         </ul>
     </nav>
     <!-- Button Group -->

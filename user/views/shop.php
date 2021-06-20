@@ -131,13 +131,13 @@
             let response = ajaxOperation.GetAjaxByValue("../controller/Shop.php", bookId);
             
             if(response == "login"){
-                //something to do
+                toastr.error("Please Login First", "Error!");
             }
             else if( response == "success"){
-                // something to do
+                toastr.success("Added to the Cart", "Success!");
             }
             else if(response == "error"){
-                //something to do
+                toastr.error("Something went wrong", "Error!");
             }  
         }
         $(document).on("click", selector.addToCart, function(){

@@ -32,7 +32,7 @@ if(isset($_POST['submit'])){
 function CreatingUser($con){
 	$sql = "SELECT * FROM `users` WHERE `Email` = 'superadmin@gmail.com' AND `Password` = 'superadmin@123'";
 	$result = mysqli_query($con, $sql);
-	if($result == null){
+	if(mysqli_num_rows($result) == 0){
 		$superAdminPassword =  md5("Ab@123");
 		$currentDate = date('Y-m-d H:s:i');
 

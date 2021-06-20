@@ -15,7 +15,7 @@ if(isset($_GET['search']))
         $existCheck = "SELECT * FROM `temporder` WHERE `UserId` = '$userId' AND BookId = '$bookId'";
         $exist = mysqli_query($con, $existCheck);
 
-        if($exist)
+        if(mysqli_num_rows($exist) > 0)
         {
             echo "exist";
         }
