@@ -25,6 +25,8 @@
     <link href="../../admin/public/layout/lib/DataTables/datatables.min.css" rel="stylesheet" />
     <link href="../../admin/public/layout/assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="../../admin/public/layout/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    
+    <link href="../../admin/public/layout/lib/toastr/toastr.min.css" rel="stylesheet" />
 </head>
 
 <body>

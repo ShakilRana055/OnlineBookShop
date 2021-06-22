@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2021 at 05:28 PM
+-- Generation Time: Jun 22, 2021 at 12:27 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -111,15 +111,17 @@ CREATE TABLE `companyinformation` (
   `Address` varchar(255) DEFAULT NULL,
   `LogoUrl` varchar(255) DEFAULT NULL,
   `Slogan` varchar(255) DEFAULT NULL,
-  `CreatedDate` datetime DEFAULT NULL
+  `CreatedDate` datetime DEFAULT NULL,
+  `InsideDhakaCity` int(11) NOT NULL,
+  `OutsideDhakaCity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `companyinformation`
 --
 
-INSERT INTO `companyinformation` (`Id`, `Name`, `Email`, `Address`, `LogoUrl`, `Slogan`, `CreatedDate`) VALUES
-(1, 'Online Book Shop', 'someemail@gmail.com', 'Dhaka, Bangladesh', '', 'Define, Ultimate', '2021-06-07 00:00:00');
+INSERT INTO `companyinformation` (`Id`, `Name`, `Email`, `Address`, `LogoUrl`, `Slogan`, `CreatedDate`, `InsideDhakaCity`, `OutsideDhakaCity`) VALUES
+(1, 'Online Book Shop', 'someemail@gmail.com', 'Dhaka, Bangladesh', '', 'Define, Ultimate', '2021-06-07 00:00:00', 60, 120);
 
 -- --------------------------------------------------------
 
@@ -381,7 +383,8 @@ INSERT INTO `users` (`Id`, `Name`, `Email`, `Phone`, `Address`, `OutsideCity`, `
 (15, 'public', 'public@gmail.com', '123445456', 'some address', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624336admin.png', 'Admin', '2021-06-02 06:29:25'),
 (16, 'without photo', 'whitout@gmail.com', '123', '12345', NULL, '202cb962ac59075b964b07152d234b70', '', 'Admin', '2021-06-02 06:07:32'),
 (17, 'Shakil Rana', 'skl@gmail.com', '435435', 'kaliakoir', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622623459admin.png', 'Admin', '2021-06-02 14:19:44'),
-(19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07');
+(19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07'),
+(24, 'customer', 'customer@gmail.com', '24234', 'some address here', '0', '202cb962ac59075b964b07152d234b70', '', 'Customer', '2021-06-22 14:41:57');
 
 --
 -- Indexes for dumped tables
@@ -573,7 +576,7 @@ ALTER TABLE `temporder`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

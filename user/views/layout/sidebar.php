@@ -1,8 +1,6 @@
-   <!-- ##### Main Content Wrapper Start ##### -->
-   <!-- style = "background-color: #ffe6cc;" -->
+
 <div class="main-content-wrapper d-flex clearfix">
 
-<!-- Mobile Nav (max width 767px)-->
 <div class="mobile-nav">
     <!-- Navbar Brand -->
     <div class="amado-navbar-brand">
@@ -14,26 +12,36 @@
     </div>
 </div>
 
-<!-- Header Area Start -->
-<!-- style = "background-color: #ccccff;" -->
 <header class="header-area clearfix"  >
-    <!-- Close Icon -->
+    
     <div class="nav-close">
         <i class="fa fa-close" aria-hidden="true"></i>
     </div>
-    <!-- Logo -->
+    
     <div class="logo">
         <a href="index.php">
             <img src="../../admin/views/htmlHelper/bookShop.jpg" alt=""></a>
     </div>
-    <!-- Amado Nav -->
+    
     <nav class="amado-nav">
         <ul>
             <li class="active"><a href="index.php">Home</a></li>
             <li><a href="shop.php">Shop</a></li>
             <li><a href="product-details.html">Product</a></li>
             <li><a href="cart.html">Cart</a></li>
-            <li><a href="customerRegistration.php">Registration</a></li>
+            
+            <?php 
+            if(isset($_SESSION['customer']['Name']))
+            {?>
+                <li><a href="../controller/LogOut.php">Log out</a></li>
+            <?php
+            }else {?>
+                <li><a href="login.php">Login</a></li>
+                <li><a href="customerRegistration.php">Registration</a></li>
+            <?php
+            }
+            ?>
+            
         </ul>
     </nav>
     <!-- Button Group -->

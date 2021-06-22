@@ -18,7 +18,7 @@
             
             if($Photo != null){
                 $convertedPhotoName = time()."admin.".$photoName[1];
-                $PhotoUrl = "../public/image/".$convertedPhotoName;
+                $PhotoUrl = "../../public/image/".$convertedPhotoName;
             }
             
             $sql = "INSERT INTO `users`(`Name`, `Email`, `Phone`, `Address`, `Password`, `PhotoUrl`, `UserType`, `CreatedDate`) 
@@ -57,7 +57,7 @@
             
             if($Photo != null){
                 $convertedPhotoName = time()."admin.".$photoName[1];
-                $PhotoUrl = "../public/image/".$convertedPhotoName;
+                $PhotoUrl = "../../public/image/".$convertedPhotoName;
                 $sql = "UPDATE `users` SET `Name`='$Name',`Phone`='$Phone',`Address`='$Address', `PhotoUrl` = '$PhotoUrl' WHERE `Id` = '$id'";
             
             }

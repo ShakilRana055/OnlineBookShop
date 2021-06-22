@@ -13,7 +13,7 @@ if(isset($_POST['submit'])){
 	$pass = trim($_POST['Password']);
 	$md5Password = md5($pass);
 
-	$sql = "SELECT * FROM `users` WHERE `Email` = '$user' AND `Password` = '$md5Password'";
+	$sql = "SELECT * FROM `users` WHERE `Email` = '$user' AND `Password` = '$md5Password' AND `UserType` != 'Customer'";
 
 	$result = mysqli_query($con, $sql);
 	$data = mysqli_fetch_assoc($result);

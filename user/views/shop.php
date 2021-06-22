@@ -40,7 +40,7 @@
                     {
                         ?>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="<?php echo $value['Id'];?>" id="<?php echo $value['Name'].$value['Id'];?>">
+                            <input class="form-check-input" type="checkbox" name = "SubCategory[]" value="<?php echo $value['Id'];?>" id="<?php echo $value['Name'].$value['Id'];?>">
                             <label class="form-check-label" for="<?php echo $value['Name'].$value['Id'];?>"><?php echo $value['Name'];?></label>
                         </div>
                     <?php
@@ -102,10 +102,10 @@
                                 <p class="price">৳: <?php echo $UnitPrice;?></p>
                                 
                                 <p>
-                                    <a href="bookDetail.php?bookId=<?php echo $BookId;?>" data-toggle="tooltip"title="Detail">
+                                    <a href="bookDetail.php?bookId=<?php echo $BookId;?>" class = "btn" data-toggle="tooltip"title="Detail">
                                     <img src="../public/img/core-img/info.png" height = "30" width = "30" alt=""></a>
                                 
-                                    <a class = "addToCart" bookId = "<?php echo $BookId;?>" title="Add to Cart">
+                                    <a class = "addToCart btn" bookId = "<?php echo $BookId;?>" title="Add to Cart">
                                     <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
                                 </p>
                             </div>

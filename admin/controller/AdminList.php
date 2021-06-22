@@ -15,14 +15,14 @@ include("../../connection/DatabaseConnection.php");
  $where_condition = $sqlTot = $sqlRec = "";
  
  if( !empty($params['search']['value']) ) {
-    $where_condition .= " WHERE ";
+    $where_condition .= " AND ";
     $where_condition .= " ( Name LIKE '%".$params['search']['value']."%' ";    
     $where_condition .= " OR Phone LIKE '%".$params['search']['value']."%' ";
     $where_condition .= " OR Email LIKE '%".$params['search']['value']."%' ";
     $where_condition .= " OR Address LIKE '%".$params['search']['value']."%' )";
  }
  
- $sql_query = "SELECT * FROM `users`";
+ $sql_query = "SELECT * FROM `users` WHERE `UserType` != 'Customer'";
  $sqlTot .= $sql_query;
  $sqlRec .= $sql_query;
  
