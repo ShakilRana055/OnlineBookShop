@@ -28,7 +28,7 @@
             <li class="active"><a href="index.php">Home</a></li>
             <li><a href="shop.php">Shop</a></li>
             <li><a href="product-details.html">Product</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="cart.php">Cart</a></li>
             
             <?php 
             if(isset($_SESSION['customer']['Name']))

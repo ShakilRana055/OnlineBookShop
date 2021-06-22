@@ -101,7 +101,7 @@
                                 <h6><?php echo substr((string)$name,0, 13);?></h6>
                                 <p class="price">৳: <?php echo $UnitPrice;?></p>
                                 
-                                <p>
+                                <p style = "background-color: #ffb3d9;">
                                     <a href="bookDetail.php?bookId=<?php echo $BookId;?>" class = "btn" data-toggle="tooltip"title="Detail">
                                     <img src="../public/img/core-img/info.png" height = "30" width = "30" alt=""></a>
                                 
