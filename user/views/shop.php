@@ -130,8 +130,12 @@
         {
             let response = ajaxOperation.GetAjaxByValue("../controller/Shop.php", bookId);
             
+
             if(response == "login"){
                 toastr.error("Please Login First", "Error!");
+            }
+            else if(response == "exist"){
+                toastr.error("Already Added into Cart", "Error");
             }
             else if( response == "success"){
                 toastr.success("Added to the Cart", "Success!");
@@ -142,8 +146,7 @@
         }
         $(document).on("click", selector.addToCart, function(){
             let bookId = $(this).attr("bookId");
-            //AddToCart(bookId);
-            // console.log(bookId);
+            AddToCart(bookId);
         });
     })();
 </script>

@@ -7,9 +7,9 @@ if(isset($_GET['search']))
     $bookId = $_GET['search'];
     // first check if session user exist
 
-    if($_SESSION['customer']['Id'] == '')
+    if(isset($_SESSION['customer']['Id']) == false)
         echo "login";
-    else if($_SESSION['customer']['Id'] != '')
+    else
     {
         $userId = $_SESSION['customer']['Id'];
         $existCheck = "SELECT * FROM `temporder` WHERE `UserId` = '$userId' AND BookId = '$bookId'";
@@ -24,7 +24,7 @@ if(isset($_GET['search']))
             $sql = "INSERT INTO `temporder`(`UserId`, `BookId`, `Quantity`, `CreatedDate`) 
                     VALUES ('$userId', '$bookId', '1', '$currentDate')";
             $result = mysqli_query($con, $sql);
-            $result ? "success" : "error";
+            echo $result ? "success" : "error";
         }
     }
 }

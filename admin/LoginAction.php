@@ -30,7 +30,8 @@ if(isset($_POST['submit'])){
 }
 
 function CreatingUser($con){
-	$sql = "SELECT * FROM `users` WHERE `Email` = 'superadmin@gmail.com' AND `Password` = 'superadmin@123'";
+	$superAdminPassword =  md5("Ab@123");
+	$sql = "SELECT * FROM `users` WHERE `Email` = 'superadmin@gmail.com' AND `Password` = '$superAdminPassword'";
 	$result = mysqli_query($con, $sql);
 	if(mysqli_num_rows($result) == 0){
 		$superAdminPassword =  md5("Ab@123");
