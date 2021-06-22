@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\admin",
-    "\\admin\\views"
+    "\\ajax-library",
+    "\\user",
+    "\\user\\controller",
+    "\\user\\views"
   ],
-  "SelectedNode": "\\admin\\views\\purchase.php",
+  "SelectedNode": "\\ajax-library\\AjaxOperation.js",
   "PreviewInSolutionExplorer": false
 }
