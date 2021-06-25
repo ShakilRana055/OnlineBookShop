@@ -1,3 +1,16 @@
+<?php
+    $cartPending = 0;
+    if(isset($_SESSION['customer']['Name']))
+    {
+        $id = $_SESSION['customer']['Id'];
+        $sql = "SELECT count(1) Cart
+                FROM temporder
+                WHERE UserId = '$id'
+                group by UserId";
+        $cartResult = mysqli_fetch_assoc(mysqli_query($con, $sql));
+        $cartPending = $cartResult['Cart'];
+    }
+?>
 
 <div class="main-content-wrapper d-flex clearfix">
 
@@ -28,11 +41,11 @@
             <li class="active"><a href="index.php">Home</a></li>
             <li><a href="shop.php">Shop</a></li>
             <li><a href="product-details.html">Product</a></li>
-            <li><a href="cart.php">Cart</a></li>
-            
             <?php 
             if(isset($_SESSION['customer']['Name']))
             {?>
+                <li><a href="myCart.php">My Cart</a></li>
+                <li><a href="editProfile.php">Edit Profile</a></li>
                 <li><a href="../controller/LogOut.php">Log out</a></li>
             <?php
             }else {?>
@@ -50,9 +63,16 @@
     </div>
     <!-- Cart Menu -->
     <div class="cart-fav-search mb-100">
-        <a href="cart.html" class="cart-nav">
-        <img src="../public/img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-        <a href="#" class="fav-nav"><img src="../public/img/core-img/favorites.png" alt=""> Favourite</a>
+    <?php 
+        if(isset($_SESSION['customer']['Name']))
+        {?>
+            <a href="cart.php" class="cart-nav">
+                <img src="../public/img/core-img/cart.png" alt=""> Cart <span>(<?php echo $cartPending;?>)</span>
+            </a>
+        <?php
+        }
+    ?>
+        
         <a href="#" class="search-nav"><img src="../public/img/core-img/search.png" alt=""> Search</a>
     </div>
     <!-- Social Button -->

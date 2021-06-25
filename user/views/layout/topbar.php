@@ -27,6 +27,11 @@
     <link href="../../admin/public/layout/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     
     <link href="../../admin/public/layout/lib/toastr/toastr.min.css" rel="stylesheet" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" rel="stylesheet" />
+
+
 </head>
 
 <body>

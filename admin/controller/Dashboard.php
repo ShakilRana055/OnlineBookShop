@@ -19,7 +19,7 @@
                             WHERE PurchaseDate = '$initialThisMonth'";
                 $queryResult = mysqli_fetch_assoc(mysqli_query($con, $sqlQuery));
                 
-                $days[] = $initialThisMonth;
+                $days[] = $i; //$initialThisMonth;
                 $purchase[] = $queryResult['GrandTotal']; //number_format($queryResult['GrandTotal'], 2, '.', ',');
 
 

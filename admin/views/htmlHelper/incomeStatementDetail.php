@@ -192,7 +192,7 @@
                     while($row = mysqli_fetch_assoc($salesInvoiceResult)){
                         $invoiceNumber = $row['InvoiceNumber']; $name = $row['Name'];
                         $grandTotal = $row['GrandTotal']; $subTotal = $row['SubTotal']; 
-                        $dues = $row['Dues']; $date = $row['InvoiceDate'];
+                        $dues = 0; $date = $row['InvoiceDate'];
 
                         $salesSubTotal += $subTotal;
                         $salesGrandTotal += $grandTotal;

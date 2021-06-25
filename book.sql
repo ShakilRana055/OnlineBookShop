@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2021 at 12:27 PM
+-- Generation Time: Jun 25, 2021 at 06:55 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -133,14 +133,26 @@ CREATE TABLE `invoice` (
   `Id` int(11) NOT NULL,
   `InvoiceNumber` varchar(50) DEFAULT NULL,
   `UserId` int(11) DEFAULT NULL,
-  `InvoiceDate` datetime DEFAULT NULL,
+  `InvoiceDate` date DEFAULT NULL,
   `GrandTotal` float DEFAULT NULL,
   `SubTotal` float DEFAULT NULL,
   `Discount` float DEFAULT NULL,
-  `Dues` float DEFAULT NULL,
+  `DeliveryCharge` float NOT NULL,
   `PaymentMode` varchar(30) DEFAULT NULL,
+  `Status` varchar(30) NOT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`Id`, `InvoiceNumber`, `UserId`, `InvoiceDate`, `GrandTotal`, `SubTotal`, `Discount`, `DeliveryCharge`, `PaymentMode`, `Status`, `CreatedDate`) VALUES
+(1, 'INV-000001', 24, '2021-06-25', 4260, 4140, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-25 08:20:41'),
+(2, 'INV-000002', 24, '2021-06-25', 865, 745, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-25 08:21:34'),
+(3, 'INV-000003', 24, '2021-06-25', 615, 495, 0, 120, 'Cash on Delivery', 'DELIVERED', '2021-06-25 08:23:02'),
+(4, 'INV-000004', 24, '2021-06-25', 1620, 1500, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-25 08:26:03'),
+(5, 'INV-000005', 24, '2021-06-25', 1740, 1620, 0, 120, 'Cash on Delivery', 'SHIPMENT', '2021-06-25 08:27:37');
 
 -- --------------------------------------------------------
 
@@ -158,6 +170,24 @@ CREATE TABLE `invoicedetail` (
   `TotalPrice` float DEFAULT NULL,
   `CreatedDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoicedetail`
+--
+
+INSERT INTO `invoicedetail` (`Id`, `InvoiceId`, `BookId`, `Quantity`, `UnitPrice`, `SellTax`, `TotalPrice`, `CreatedDate`) VALUES
+(1, 1, 2, 2, 120, 0, 240, '2021-06-25 08:20:41'),
+(2, 1, 1, 4, 375, 0, 1500, '2021-06-25 08:20:41'),
+(3, 1, 3, 6, 275, 0, 1650, '2021-06-25 08:20:41'),
+(4, 1, 4, 3, 250, 0, 750, '2021-06-25 08:20:41'),
+(5, 2, 2, 1, 120, 0, 120, '2021-06-25 08:21:34'),
+(6, 2, 1, 1, 375, 0, 375, '2021-06-25 08:21:34'),
+(7, 2, 4, 1, 250, 0, 250, '2021-06-25 08:21:34'),
+(8, 3, 2, 1, 120, 0, 120, '2021-06-25 08:23:02'),
+(9, 3, 1, 1, 375, 0, 375, '2021-06-25 08:23:02'),
+(10, 4, 1, 4, 375, 0, 1500, '2021-06-25 08:26:03'),
+(11, 5, 2, 1, 120, 0, 120, '2021-06-25 08:27:37'),
+(12, 5, 1, 4, 375, 0, 1500, '2021-06-25 08:27:37');
 
 -- --------------------------------------------------------
 
@@ -250,20 +280,6 @@ INSERT INTO `purchasedetail` (`Id`, `PurchaseId`, `BookId`, `Quantity`, `Purchas
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shipment`
---
-
-CREATE TABLE `shipment` (
-  `Id` int(11) NOT NULL,
-  `InvoiceId` int(11) DEFAULT NULL,
-  `ShipmentCharge` float DEFAULT NULL,
-  `Status` varchar(30) DEFAULT NULL,
-  `CreatedDate` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `stock`
 --
 
@@ -280,11 +296,11 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`Id`, `BookId`, `Quantity`, `UnitPrice`, `UpdatedDate`) VALUES
-(1, 2, 18, 120, '2021-06-07 00:00:00'),
-(2, 1, 11, 375, '2021-06-07 00:00:00'),
-(3, 3, 40, 275, '2021-06-08 00:00:00'),
-(4, 4, 45, 250, '2021-06-10 00:00:00'),
-(5, 5, 50, 235, '2021-06-16 12:58:33');
+(1, 2, 43, 120, '2021-06-25 08:27:37'),
+(2, 1, 2, 375, '2021-06-25 08:27:37'),
+(3, 3, 23, 275, '2021-06-25 08:20:41'),
+(4, 4, 93, 250, '2021-06-25 08:21:34'),
+(5, 5, 45, 235, '2021-06-25 08:16:21');
 
 -- --------------------------------------------------------
 
@@ -348,12 +364,20 @@ INSERT INTO `supplier` (`Id`, `Name`, `Phone`, `Email`, `Address`, `PhotoUrl`, `
 
 CREATE TABLE `temporder` (
   `Id` int(11) NOT NULL,
-  `InvoiceNumber` varchar(15) NOT NULL,
   `UserId` int(11) NOT NULL,
   `BookId` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `CreatedDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `temporder`
+--
+
+INSERT INTO `temporder` (`Id`, `UserId`, `BookId`, `Quantity`, `CreatedDate`) VALUES
+(14, 24, 2, 1, '2021-06-25 08:35:02'),
+(15, 24, 1, 1, '2021-06-25 08:35:04'),
+(16, 24, 3, 1, '2021-06-25 08:37:39');
 
 -- --------------------------------------------------------
 
@@ -379,12 +403,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`Id`, `Name`, `Email`, `Phone`, `Address`, `OutsideCity`, `Password`, `PhotoUrl`, `UserType`, `CreatedDate`) VALUES
-(1, 'Super Admin', 'superadmin@gmail.com', '123', 'Kaliakoir', NULL, 'b715f831f1fee468d6b1760226035b29', '../public/layout/images/superadmin.jpg', 'SuperAdmin', '2021-05-29 14:01:13'),
 (15, 'public', 'public@gmail.com', '123445456', 'some address', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624336admin.png', 'Admin', '2021-06-02 06:29:25'),
 (16, 'without photo', 'whitout@gmail.com', '123', '12345', NULL, '202cb962ac59075b964b07152d234b70', '', 'Admin', '2021-06-02 06:07:32'),
 (17, 'Shakil Rana', 'skl@gmail.com', '435435', 'kaliakoir', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622623459admin.png', 'Admin', '2021-06-02 14:19:44'),
 (19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07'),
-(24, 'customer', 'customer@gmail.com', '24234', 'some address here', '0', '202cb962ac59075b964b07152d234b70', '', 'Customer', '2021-06-22 14:41:57');
+(24, 'customer', 'customer@gmail.com', '24234', 'some address here', '0', '202cb962ac59075b964b07152d234b70', '', 'Customer', '2021-06-22 14:41:57'),
+(38, 'Super Admin', 'superadmin@gmail.com', '0178', 'address', NULL, 'b715f831f1fee468d6b1760226035b29', '../public/layout/images/superadmin.jpg', 'SuperAdmin', '2021-06-22 17:22:04');
 
 --
 -- Indexes for dumped tables
@@ -444,12 +468,6 @@ ALTER TABLE `purchase`
 -- Indexes for table `purchasedetail`
 --
 ALTER TABLE `purchasedetail`
-  ADD PRIMARY KEY (`Id`);
-
---
--- Indexes for table `shipment`
---
-ALTER TABLE `shipment`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -516,13 +534,13 @@ ALTER TABLE `companyinformation`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `publications`
@@ -541,12 +559,6 @@ ALTER TABLE `purchase`
 --
 ALTER TABLE `purchasedetail`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `shipment`
---
-ALTER TABLE `shipment`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stock`
@@ -570,13 +582,13 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `temporder`
 --
 ALTER TABLE `temporder`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

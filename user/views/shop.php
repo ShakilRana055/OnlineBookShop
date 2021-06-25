@@ -88,7 +88,8 @@
                         FROM stock s 
                         INNER JOIN books b ON b.Id = s.BookId LIMIT $offset, $no_of_records_per_page";
                 $res_data = mysqli_query($con,$sql);
-                while($row = mysqli_fetch_assoc($res_data)){
+                while($row = mysqli_fetch_assoc($res_data))
+                {
                     $photoUrl = $row['PhotoUrl'];
                     $UnitPrice = $row['UnitPrice'];
                     $name = $row['Name'];
@@ -104,9 +105,27 @@
                                 <p style = "background-color: #ffb3d9;">
                                     <a href="bookDetail.php?bookId=<?php echo $BookId;?>" class = "btn" data-toggle="tooltip"title="Detail">
                                     <img src="../public/img/core-img/info.png" height = "30" width = "30" alt=""></a>
-                                
-                                    <a class = "addToCart btn" bookId = "<?php echo $BookId;?>" title="Add to Cart">
-                                    <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
+                                    
+                                    
+                                    <?php 
+                                        if(isset($_SESSION['customer']['Id']))
+                                        {
+                                            $userId = $_SESSION['customer']['Id'];
+                                            $tempQuery = "SELECT Id FROM `temporder` WHERE `UserId` = '$userId' AND `BookId` = '$BookId'";
+                                            $tempResult = mysqli_query($con, $tempQuery);
+                                            if(mysqli_num_rows($tempResult) == 0)
+                                            { ?>
+                                                <a class = "addToCart btn" bookId = "<?php echo $BookId;?>" title="Add to Cart">
+                                                <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
+                                       
+                                            <?php }
+                                        }
+                                        else
+                                        { ?>
+                                            <a class = "addToCart btn" bookId = "<?php echo $BookId;?>" title="Add to Cart">
+                                            <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt=""></a>
+                                    <?php } ?>
+                                   
                                 </p>
                             </div>
                         </div>

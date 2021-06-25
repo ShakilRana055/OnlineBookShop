@@ -1,11 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\ajax-library",
-    "\\user",
-    "\\user\\controller",
-    "\\user\\views"
+    ""
   ],
-  "SelectedNode": "\\ajax-library\\AjaxOperation.js",
   "PreviewInSolutionExplorer": false
 }

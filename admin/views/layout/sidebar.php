@@ -125,9 +125,8 @@
                                     <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li><a asp-controller="SalesInvoice" asp-action="Index">Add Sale</a></li>
-                                    <li><a asp-controller="SalesInvoice" asp-action="SalesInvoiceList">Sales List</a></li>
-                                    <li><a asp-controller="SalesInvoice" asp-action="AccountReceivable">Account Receivable</a></li>
+                                    <li><a href = "orderList.php">Order List</a></li>
+                                    <li><a href = "#">Top 10 Sales</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -146,7 +145,7 @@
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "stockReport.php">Stock Report</a></li>
                                     <li><a href = "supplierReport.php">Supplier Report</a></li>
-                                    <li><a asp-controller="Report" asp-action="CustomerReport">Customer Report</a></li>
+                                    <li><a href = "customerReport.php">Customer Report</a></li>
                                     <?php 
                                         if($_SESSION['user']['UserType'] == "SuperAdmin"){
                                         ?>
