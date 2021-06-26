@@ -27,7 +27,7 @@
                 </button>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-hover table-bordered" id="purchaseList" >
+                <table class="table table-hover table-bordered" id="orderList" >
                     <thead style = "background-color: #ffd9b3;"> 
                         <tr>
                             <th>Invoice Number</th>
@@ -68,10 +68,12 @@
     words[90] = 'Ninety';
     
     let selector = {
-        purchaseList : $("#purchaseList"),
+        orderList : $("#orderList"),
+        proceedToNextLevel : ".proceedToNextLevel",
         viewOrderInformation: ".viewOrderInformation",
         purchaseBtnInformationReport: "#purchaseBtnInformationReport",
         viewOrderInformationReport: "viewOrderInformationReport",
+        tableInformation : '',
     }
 
     let modal = {
@@ -81,7 +83,7 @@
     }
 
     function PopulateTableData(){
-        var purchaseList = selector.purchaseList.dataTable({
+        var orderList = selector.orderList.dataTable({
             "processing": true,
             "serverSide": true,
             "filter": true,
@@ -91,7 +93,7 @@
             "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
             "order": [[0, "desc"]],
                 "ajax": {
-                    "url": "../controller/Order.php",
+                    "url": "../controller/OrderList.php",
                     "type": "POST",
                     "data": function (data) {
                     },
@@ -161,7 +163,7 @@
                     }
                 ]
         });
-    
+        selector.tableInformation = orderList;
     }
 
     window.onload = PopulateTableData();
@@ -240,7 +242,26 @@
 
     $(document).on("click", selector.purchaseBtnInformationReport, function(){
         printDiv(selector.viewOrderInformationReport);
-    })
+    });
+    
+    $(document).on("click", selector.proceedToNextLevel, function(){
+        let LevelName = $(this).attr("nextLevelName");
+        let Id = $(this).attr("id");
+        let jsonData = {
+            UpdateStatus: "UpdateStatus",
+            LevelName,
+            Id
+        };
+        let response = ajaxOperation.SavePostAjax("../controller/Order.php", jsonData);
+        console.log(JSON.parse(response));
+        if(JSON.parse(response) === true){
+            selector.tableInformation.fnFilter();
+            toastr.success("Proceeded to next Level", "Success!");
+        }
+        else{
+            toastr.error("Proceed to next Level", "Error!");
+        }
+    });
 
 })();
 

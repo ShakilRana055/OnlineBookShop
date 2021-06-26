@@ -44,7 +44,7 @@
                         $className = "badge badge-pill badge-primary";
                     }
                     else if($Status == Status::Shipment()){
-                        $className = "badge badge-pill badge-info";
+                        $className = "badge badge-pill badge-danger";
                     }
                     else{
                         $className = "badge badge-pill badge-success";

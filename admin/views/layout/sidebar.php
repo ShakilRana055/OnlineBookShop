@@ -126,7 +126,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "orderList.php">Order List</a></li>
-                                    <li><a href = "#">Top 10 Sales</a></li>
+                                    <li><a href = "top10Sales.php">Top 10 Sales</a></li>
                                 </ul>
                             </li>
                         </ul>
