@@ -57,7 +57,7 @@
                             <span class="<?php echo $className;?>"><?php echo $Status;?></span>
                         </td>
                         <td>৳<?php echo $GrandTotal;?>/-</td>
-                        <td><a href = "cartDetails.php"><button class = "btn btn-info btn-sm">Detail</button></a></td>
+                        <td><a href = "cartDetails.php?search=<?php echo $InvoiceNumber;?>"><button class = "btn btn-info btn-sm">Detail</button></a></td>
                     </tr>
                 <?php }
 

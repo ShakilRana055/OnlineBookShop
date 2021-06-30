@@ -71,7 +71,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li><a href = "supplier.php">Supplier</a></li>
-                                    <li><a href = "#">Customer</a></li>
+                                    <li><a href = "customer.php">Customer</a></li>
                                     <li><a href = "adminAccount.php">Admin Account</a></li>
                                 </ul>
                             </li>

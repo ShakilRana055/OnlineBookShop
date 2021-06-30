@@ -71,7 +71,7 @@
                             <div class="short_overview my-5">
                                 <p><?php echo $queryResult['Description'];?></p>
                             </div>
-                            <form class="cart clearfix" method="post">
+                            <!-- <form class="cart clearfix" method="post">
                                 <div class="cart-btn d-flex mb-50">
                                     <p>Qty</p>
                                     <div class="quantity">
@@ -81,7 +81,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" title = "Add to Cart" name="addtocart" value="5" class="btn btn-success btn-lg btn-block"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>

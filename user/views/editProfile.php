@@ -122,17 +122,29 @@
         }
         selector.addCustomer.click(function(){
             let formData = new FormData(selector.customerRegistration[0]);
-            formData.append('save', 'save');
-            if(PasswordValidator() === true && FieldValidation() === true)
+            formData.append('Update', 'Update');
+            if(FieldValidation() === true)
             {
-                let response = ajaxOperation.SaveAjax("../controller/Registration.php", formData);
-                
-                if(JSON.parse(response) === true){
-                    toastr.success("Registration Completed", "Success!");
-                    $(".form-control").val('');
+                if(selector.password.val() != '' || selector.confirmPassword.val() != ''){
+                    if(PasswordValidator() === true){
+                        let response = ajaxOperation.SaveAjax("../controller/Registration.php", formData);
+                        if(JSON.parse(response) === true){
+                            toastr.success("Updated Successfully!", "Success!");
+                            //$(".form-control").val('');
+                        }
+                        else
+                            toastr.error("Something went wrong!", "Error");
+                    }
+                }else{
+                    let response = ajaxOperation.SaveAjax("../controller/Registration.php", formData);
+                    if(JSON.parse(response) === true){
+                        toastr.success("Updated Successfully!", "Success!");
+                        //$(".form-control").val('');
+                    }
+                    else
+                        toastr.error("Something went wrong!", "Error");
                 }
-                else
-                    toastr.error("Email is taken!", "Error");
+                location.reload();
             }
         });
         

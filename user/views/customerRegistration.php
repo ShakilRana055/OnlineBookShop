@@ -8,11 +8,9 @@
                 <div class="row">
                     <div class="col-12 col-lg-12">
                         <div class="checkout_details_area mt-50 clearfix">
-
                             <div class="cart-title">
                                 <h2>Registration</h2>
                             </div>
-
                             <form id = "customerRegistration" method="post">
                                 <div class="row">
                                     <div class="col-6 mb-3">
@@ -63,7 +61,6 @@
                             </form>
                         </div>
                     </div>
-                   
                 </div>
             </div>
         </div>

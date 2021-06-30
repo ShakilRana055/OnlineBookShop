@@ -628,7 +628,8 @@ img {
       color: #242424; }
     .main-content-wrapper .cart-table-area table thead {
       width: 100%;
-      display: block; }
+      display: block; 
+    }
       .main-content-wrapper .cart-table-area table thead tr {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -642,7 +643,7 @@ img {
           -webkit-box-flex: 0;
           -ms-flex: 0 0 25%;
           flex: 0 0 25%;
-          width: 25%;
+          width: 100%;
           max-width: 25%;
           font-size: 12px;
           color: #242424;
@@ -667,6 +668,9 @@ img {
           flex: 0 0 25%;
           width: 25%;
           max-width: 25%; }
+      
+      
+      
           .main-content-wrapper .cart-table-area table tbody tr td h5 {
             font-size: 16px;
             color: #252525; }

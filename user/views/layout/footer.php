@@ -34,15 +34,14 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="shop.php">Shop</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="product-details.html">Product</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="cart.html">Cart</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="checkout.html">Checkout</a>
-                                        </li>
+                                        <?php if(isset($_SESSION['customer']['Id'])){ ?>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="cart.php">Shopping Cart</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="myCart.php">My Cart</a>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </nav>
@@ -69,6 +68,7 @@
     <script src="../../admin/public/layout/lib/DataTables/datatables.min.js"></script>
     <script src="../../admin/public/layout/assets/plugins/select2/select2.min.js"></script>
     <script src = "../../ajax-library/AjaxOperation.js"></script>
+    <script src="../../admin/public/layout/assets/plugins/chartjs/chart.min.js"></script>
 
     <script src="../../admin/public/layout/lib/toastr/toastr.min.js"></script>
 
@@ -77,6 +77,9 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
    
+
+                                            
+
 </body>
 
 </html>
