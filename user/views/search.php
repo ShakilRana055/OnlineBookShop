@@ -93,9 +93,12 @@
 <?php include("layout/footer.php");?>
 <script>
     (function(){
+        
+        let ajaxOperation = new AjaxOperation();
         let selector = {
             searchList: $("#searchList"),
             tableInformation: '',
+            addToCart: ".addToCart",
         }
         function PopulateData(){
             var searchList = selector.searchList.dataTable({
@@ -149,15 +152,19 @@
                         },
                         {
                             "render": function (data, type, full, meta) {
+                                let addToCart = '';
+                                if(full.Ordered == 0){
+                                    addToCart = `<button type = "button" class = "addToCart btn" bookId = "${full.Id}" title="Add to Cart">
+                                            <img src="../public/img/core-img/cart.jpg" height = "30" width = "30" alt="">Add To Cart</button>`
+                                }
                                 return `
                                 <div class="btn-group">
                                     <i class="fa fa-ellipsis-h" title = 'Actions' style = 'cursor:pointer;' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                                 <div class="dropdown-menu" >
-                                    <a href = "bookEdit.php?search=${full.Id}" style="font-size: inherit;" class="dropdown-item btn-rx" 
-                                         id = "${full.Id}"
-                                    ><i class="fa fa-check-circle" aria-hidden="true"></i>Edit</a>
-                                    <button style="font-size: inherit;" class="dropdown-item btn-rx deleteBookInformation" id = "${full.Id}" > <i class="fa fa-times" aria-hidden="true"></i>Delete</button >
-                                </div>
+                                    <a href="bookDetail.php?bookId=${full.Id}" class = "btn" data-toggle="tooltip"title="Detail">
+                                    <img src="../public/img/core-img/info.png" height = "30" width = "30" alt="">Info</a>
+                                     ${addToCart}
+                                   </div>
                                 </div>`;
                             }
                         },
@@ -166,6 +173,46 @@
             selector.tableInformation = searchList;
         }
         window.onload = PopulateData();
+
+        
+        function AddToCart(bookId)
+        {
+            let response = ajaxOperation.GetAjaxByValue("../controller/Shop.php", bookId);
+            
+            if(response == "login"){
+                toastr.error("Please Login First", "Error!");
+            }
+            else if(response == "exist"){
+                toastr.error("Already Added into Cart", "Error");
+            }
+            else if( response == "success"){
+                toastr.success("Added to the Cart", "Success!");
+            }
+            else if(response == "error"){
+                toastr.error("Something went wrong", "Error!");
+            }  
+        }
+        $(document).on("click", selector.addToCart, function(){
+            let bookId = $(this).attr("bookId");
+            Swal.fire({
+                    title: 'Are You Sure to Order?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes',
+                    showConfirmButton: true,
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
+
+                }).then((result) => {
+                    if (result.value) {
+                        AddToCart(bookId);
+                        selector.tableInformation.fnFilter();
+                    }
+                });
+        });
     })();
 
 </script>

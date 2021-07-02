@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("../../connection/DatabaseConnection.php");
-
+$userId = isset($_SESSION['customer']['Id']) ? $_SESSION['customer']['Id'] : '';
  $params = $columns = $totalRecords = $data = array();
  
  $params = $_REQUEST;
@@ -25,14 +25,28 @@ include("../../connection/DatabaseConnection.php");
     $where_condition .= " OR sb.Name LIKE '%".$params['search']['value']."%' )";
  }
  
- $sql_query = "SELECT b.*, a.Name AuthorName, pb.Name PublicationName, ct.Name CategoryName, sb.Name SubCategoryName, st.UnitPrice,
-                CASE WHEN st.Quantity > 0 THEN 1 ELSE 0 END IsAvailable
-                FROM books b 
-                INNER JOIN category ct ON b.CategoryId = ct.Id
-                INNER JOIN subcategory sb ON sb.Id = b.SubCategoryId
-                INNER JOIN publications pb ON pb.Id = b.PublicationId
-                INNER JOIN authors a on a.Id = b.AuthorId
-                INNER JOIN stock st ON st.BookId = b.Id";
+ if($userId == ''){
+   $sql_query = "SELECT b.*, a.Name AuthorName, pb.Name PublicationName, ct.Name CategoryName, sb.Name SubCategoryName, st.UnitPrice,
+   CASE WHEN st.Quantity > 0 THEN 1 ELSE 0 END IsAvailable, 0 as Ordered
+   FROM books b 
+   INNER JOIN category ct ON b.CategoryId = ct.Id
+   INNER JOIN subcategory sb ON sb.Id = b.SubCategoryId
+   INNER JOIN publications pb ON pb.Id = b.PublicationId
+   INNER JOIN authors a on a.Id = b.AuthorId
+   INNER JOIN stock st ON st.BookId = b.Id";
+ }
+ else{
+    $sql_query = "SELECT b.*, a.Name AuthorName, pb.Name PublicationName, ct.Name CategoryName, sb.Name SubCategoryName, st.UnitPrice,
+                  CASE WHEN st.Quantity > 0 THEN 1 ELSE 0 END IsAvailable
+                  ,CASE WHEN EXISTS (SELECT * FROM temporder WHERE temporder.BookId = b.Id AND temporder.UserId = $userId) THEN 1 ELSE 0 END Ordered
+                  FROM books b 
+                  INNER JOIN category ct ON b.CategoryId = ct.Id
+                  INNER JOIN subcategory sb ON sb.Id = b.SubCategoryId
+                  INNER JOIN publications pb ON pb.Id = b.PublicationId
+                  INNER JOIN authors a on a.Id = b.AuthorId
+                  INNER JOIN stock st ON st.BookId = b.Id";
+ }
+
  $sqlTot .= $sql_query;
  $sqlRec .= $sql_query;
  

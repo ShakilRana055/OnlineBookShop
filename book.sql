@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 25, 2021 at 06:55 PM
+-- Generation Time: Jul 02, 2021 at 03:34 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.1.28
 
@@ -148,11 +148,12 @@ CREATE TABLE `invoice` (
 --
 
 INSERT INTO `invoice` (`Id`, `InvoiceNumber`, `UserId`, `InvoiceDate`, `GrandTotal`, `SubTotal`, `Discount`, `DeliveryCharge`, `PaymentMode`, `Status`, `CreatedDate`) VALUES
-(1, 'INV-000001', 24, '2021-06-25', 4260, 4140, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-25 08:20:41'),
-(2, 'INV-000002', 24, '2021-06-25', 865, 745, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-25 08:21:34'),
+(1, 'INV-000001', 24, '2021-06-25', 4260, 4140, 0, 120, 'Cash on Delivery', 'DELIVERED', '2021-06-25 08:20:41'),
+(2, 'INV-000002', 24, '2021-06-25', 865, 745, 0, 120, 'Cash on Delivery', 'DELIVERED', '2021-06-25 08:21:34'),
 (3, 'INV-000003', 24, '2021-06-25', 615, 495, 0, 120, 'Cash on Delivery', 'DELIVERED', '2021-06-25 08:23:02'),
-(4, 'INV-000004', 24, '2021-06-25', 1620, 1500, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-25 08:26:03'),
-(5, 'INV-000005', 24, '2021-06-25', 1740, 1620, 0, 120, 'Cash on Delivery', 'SHIPMENT', '2021-06-25 08:27:37');
+(4, 'INV-000004', 24, '2021-06-25', 1620, 1500, 0, 120, 'Cash on Delivery', 'DELIVERED', '2021-06-25 08:26:03'),
+(5, 'INV-000005', 24, '2021-06-25', 1740, 1620, 0, 120, 'Cash on Delivery', 'DELIVERED', '2021-06-25 08:27:37'),
+(6, 'INV-000006', 24, '2021-06-27', 890, 770, 0, 120, 'Cash on Delivery', 'PENDING', '2021-06-27 08:39:00');
 
 -- --------------------------------------------------------
 
@@ -187,7 +188,10 @@ INSERT INTO `invoicedetail` (`Id`, `InvoiceId`, `BookId`, `Quantity`, `UnitPrice
 (9, 3, 1, 1, 375, 0, 375, '2021-06-25 08:23:02'),
 (10, 4, 1, 4, 375, 0, 1500, '2021-06-25 08:26:03'),
 (11, 5, 2, 1, 120, 0, 120, '2021-06-25 08:27:37'),
-(12, 5, 1, 4, 375, 0, 1500, '2021-06-25 08:27:37');
+(12, 5, 1, 4, 375, 0, 1500, '2021-06-25 08:27:37'),
+(13, 6, 2, 1, 120, 0, 120, '2021-06-27 08:39:00'),
+(14, 6, 1, 1, 375, 0, 375, '2021-06-27 08:39:00'),
+(15, 6, 3, 1, 275, 0, 275, '2021-06-27 08:39:00');
 
 -- --------------------------------------------------------
 
@@ -296,9 +300,9 @@ CREATE TABLE `stock` (
 --
 
 INSERT INTO `stock` (`Id`, `BookId`, `Quantity`, `UnitPrice`, `UpdatedDate`) VALUES
-(1, 2, 43, 120, '2021-06-25 08:27:37'),
-(2, 1, 2, 375, '2021-06-25 08:27:37'),
-(3, 3, 23, 275, '2021-06-25 08:20:41'),
+(1, 2, 42, 120, '2021-06-27 08:39:00'),
+(2, 1, 1, 375, '2021-06-27 08:39:00'),
+(3, 3, 22, 275, '2021-06-27 08:39:00'),
 (4, 4, 93, 250, '2021-06-25 08:21:34'),
 (5, 5, 45, 235, '2021-06-25 08:16:21');
 
@@ -375,9 +379,7 @@ CREATE TABLE `temporder` (
 --
 
 INSERT INTO `temporder` (`Id`, `UserId`, `BookId`, `Quantity`, `CreatedDate`) VALUES
-(14, 24, 2, 1, '2021-06-25 08:35:02'),
-(15, 24, 1, 1, '2021-06-25 08:35:04'),
-(16, 24, 3, 1, '2021-06-25 08:37:39');
+(1, 24, 1, 1, '2021-07-02 07:14:57');
 
 -- --------------------------------------------------------
 
@@ -407,7 +409,7 @@ INSERT INTO `users` (`Id`, `Name`, `Email`, `Phone`, `Address`, `OutsideCity`, `
 (16, 'without photo', 'whitout@gmail.com', '123', '12345', NULL, '202cb962ac59075b964b07152d234b70', '', 'Admin', '2021-06-02 06:07:32'),
 (17, 'Shakil Rana', 'skl@gmail.com', '435435', 'kaliakoir', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622623459admin.png', 'Admin', '2021-06-02 14:19:44'),
 (19, 'duplicate test', 'skl1@gmail.com', '234324', 'sdsgfdg', NULL, '202cb962ac59075b964b07152d234b70', '../../public/image/1622624891admin.png', 'Admin', '2021-06-02 15:48:07'),
-(24, 'customer', 'customer@gmail.com', '24234', 'some address here', '0', '202cb962ac59075b964b07152d234b70', '', 'Customer', '2021-06-22 14:41:57'),
+(24, 'New Customer', 'customer@gmail.com', '01776415904', 'some changes', '0', '202cb962ac59075b964b07152d234b70', '', 'Customer', '2021-06-22 14:41:57'),
 (38, 'Super Admin', 'superadmin@gmail.com', '0178', 'address', NULL, 'b715f831f1fee468d6b1760226035b29', '../public/layout/images/superadmin.jpg', 'SuperAdmin', '2021-06-22 17:22:04');
 
 --
@@ -534,13 +536,13 @@ ALTER TABLE `companyinformation`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `invoicedetail`
 --
 ALTER TABLE `invoicedetail`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `publications`
@@ -582,7 +584,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `temporder`
 --
 ALTER TABLE `temporder`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
