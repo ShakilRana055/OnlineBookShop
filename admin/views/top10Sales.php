@@ -118,7 +118,7 @@
             });
         }
         window.onload = function () {
-            selector.top10SalesList.dataTable();
+            selector.top10SalesList.dataTable({"order": [[2, "desc"]]});
             ChartInformation();
         }
     })();

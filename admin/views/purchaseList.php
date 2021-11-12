@@ -43,7 +43,8 @@
                         <?php 
                             $sqlQuery = "SELECT p.*, sp.Name
                             FROM purchase p
-                            INNER JOIN supplier sp ON sp.Id = p.SupplierId";
+                            INNER JOIN supplier sp ON sp.Id = p.SupplierId
+                            ORDER BY p.Id DESC";
 
                             $queryResult = mysqli_query($con, $sqlQuery);
                             while($row = mysqli_fetch_assoc($queryResult)){
@@ -109,7 +110,7 @@
                 "autoWidth": false,
                 'dom': "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
-                "order": [[0, "desc"]],
+                "order": [[6, "desc"]],
                 "columnDefs": [
                         { "className": "custom", "targets": [0, 1, 2, 3,4,5,6] },
                     ],

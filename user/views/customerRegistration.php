@@ -17,13 +17,13 @@
                                         <input type="text" class="form-control" name = "Name" id="name" value="" placeholder="Name" required>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <input type="number" class="form-control" name = "Phone" id="phone" placeholder="Phone" value="">
+                                        <input type="number" required class="form-control" name = "Phone" id="phone" placeholder="Phone" value="">
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <input type="email" class="form-control" name = "Email" id="email" placeholder="Email" value="">
+                                        <input type="email" required class="form-control" name = "Email" id="email" placeholder="Email" value="">
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <input type="password" class="form-control" name = "Password" id="password" placeholder="Password..." value="">
+                                        <input type="password" required class="form-control" name = "Password" id="password" placeholder="Password..." value="">
                                     </div>
                                     <div class="col-6 mb-3">
                                         <select class="w-100" name = "Division" id="country">
@@ -47,15 +47,15 @@
                                     </select>
                                     </div>
                                     <div class="col-6 mb-3">
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..." value="">
+                                        <input type="password" required class="form-control" id="confirmPassword" placeholder="Confirm Password..." value="">
                                     </div>
                                     
                                     <div class="col-12 mb-3">
-                                        <textarea name="Address" class="form-control w-100" id="address" cols="30" rows="10" placeholder="Your Address here..."></textarea>
+                                        <textarea name="Address" required class="form-control w-100" id="address" cols="30" rows="10" placeholder="Your Address here..."></textarea>
                                     </div>
                                     <div class = "col-12 mb-3">
                                         <button type = "reset" class = "btn btn-danger">Cancel</button>
-                                        <button type = "button" class = "btn btn-success" id = "addCustomer">Register</button>
+                                        <button type = "submit" class = "btn btn-success" id = "addCustomer">Register</button>
                                     </div>
                                 </div>
                             </form>
@@ -114,7 +114,7 @@
             }
             else return true;
         }
-        selector.addCustomer.click(function(){
+        selector.customerRegistration.submit(function(){
             let formData = new FormData(selector.customerRegistration[0]);
             formData.append('save', 'save');
             if(PasswordValidator() === true && FieldValidation() === true)
@@ -128,6 +128,7 @@
                 else
                     toastr.error("Email is taken!", "Error");
             }
+            return false;
         });
         
     })();

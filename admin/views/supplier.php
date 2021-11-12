@@ -190,7 +190,7 @@
                 "pageLength": 6,
                 "autoWidth": false,
                 "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
-                "order": [[0, "desc"]],
+                "order": [[3, "desc"]],
                     "ajax": {
                         "url": "../controller/SupplierList.php",
                         "type": "POST",

@@ -91,7 +91,7 @@
             "autoWidth": false,
             'dom': "<'row'<'col-sm-3'l><'col-sm-5 text-center'B><'col-sm-4'f>>" + "<'row'<'col-sm-12'tr>>" + "<'row'<'col-sm-5'i><'col-sm-7'p>>",
             "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
-            "order": [[0, "desc"]],
+            "order": [[5, "desc"]],
                 "ajax": {
                     "url": "../controller/OrderList.php",
                     "type": "POST",

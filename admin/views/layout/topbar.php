@@ -1,4 +1,8 @@
 <?php session_start();
+ if(isset($_SESSION['user'])){}
+ else{
+     header('Location: ../index.php');
+ }
 ?>
 <?php include("../../connection/DatabaseConnection.php");?>
 <!DOCTYPE html>

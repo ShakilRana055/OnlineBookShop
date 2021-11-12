@@ -108,7 +108,7 @@
                 "pageLength": 10,
                 "autoWidth": false,
                 "lengthMenu": [[10, 50, 100, 150, 200, 500], [10, 50, 100, 150, 200, 500]],
-                "order": [[0, "desc"]],
+                "order": [[4, "desc"]],
                     "ajax": {
                         "url": "../controller/Search.php",
                         "type": "POST",

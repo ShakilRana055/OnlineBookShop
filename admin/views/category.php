@@ -204,7 +204,7 @@ $headerName = '- Category, Sub-Category';
             "pageLength": 5,
             "autoWidth": false,
             "lengthMenu": [[5, 10, 50, 100, 150, 200, 500], [5, 10, 50, 100, 150, 200, 500]],
-            "order": [[0, "desc"]],
+            "order": [[1, "desc"]],
                 "ajax": {
                     "url": "../controller/CategoryList.php",
                     "type": "POST",
@@ -361,7 +361,7 @@ $headerName = '- Category, Sub-Category';
             "pageLength": 5,
             "autoWidth": false,
             "lengthMenu": [[5, 10, 50, 100, 150, 200, 500], [5, 10, 50, 100, 150, 200, 500]],
-            "order": [[0, "desc"]],
+            "order": [[1, "desc"]],
                 "ajax": {
                     "url": "../controller/SubCategoryList.php",
                     "type": "POST",
