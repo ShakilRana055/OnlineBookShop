@@ -238,15 +238,16 @@
                         {
                             "render": function (data, type, full, meta) {
                                 if(full[0].LoggedUserType === "Admin"){
-                                    if(full.Email !== "superadmin@gmail.com"){
-                                            return `<button style="font-size: inherit;" class=" btn btn-primary dropdown-item btn-sm editSupplierInformation" 
-                                                    name = "${full.Name}" phone = "${full.Phone}" email = "${full.Email}" address = "${full.Address}"
-                                                    id = "${full.Id}"
-                                                    >Edit</button >`;
-                                    }
-                                    else{
-                                        return "";
-                                    }
+                                    // if(full.Email !== "superadmin@gmail.com"){
+                                    //         return `<button style="font-size: inherit;" class=" btn btn-primary dropdown-item btn-sm editSupplierInformation" 
+                                    //                 name = "${full.Name}" phone = "${full.Phone}" email = "${full.Email}" address = "${full.Address}"
+                                    //                 id = "${full.Id}"
+                                    //                 >Edit</button >`;
+                                    // }
+                                    // else{
+                                    //     return "";
+                                    // }
+                                    return "";
                                 }
                                 else{
                                     if(full.Email === "superadmin@gmail.com"){

@@ -81,6 +81,20 @@
     <script src="../public/layout/assets/plugins/chartjs/chart.min.js"></script>
     <script src="../public/layout/Pages/Print.js"></script>
     <script src = "../../ajax-library/AjaxOperation.js"></script>
+    <script>
+        function MobileNumberCheck(mobileNumber){
+            let isOk = true;
+            for(let i = 0 ; i < mobileNumber.size(); i ++){
+                if(mobileNumber[i] >= '0' && mobileNumber[i] <= '9' || mobileNumber[i] == '+'){
+                    continue
+                }
+                else{
+                    isOk = false;
+                }
+            }
+            return isOk;
+        }
+    </script>
 </body>
 </html>
 

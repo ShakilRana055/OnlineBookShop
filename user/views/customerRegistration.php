@@ -112,7 +112,19 @@
                 toastr.error("Address field is required", "Error!");
                 return false;
             }
-            else return true;
+            else {
+                let isOk = true;
+                let name = selector.name.val();
+                for(let i = 0; i < name.length; i ++){
+                    if(name[i] >= '0' && name[i] <= '9')
+                        isOk = false;
+                }
+                if(isOk == false){
+                    toastr.error("Name field can't contain digit.", "Error!");
+                    return false;
+                }
+            }
+            return true;
         }
         selector.customerRegistration.submit(function(){
             let formData = new FormData(selector.customerRegistration[0]);
@@ -124,10 +136,15 @@
                 if(JSON.parse(response) === true){
                     toastr.success("Registration Completed", "Success!");
                     $(".form-control").val('');
+                    return true;
                 }
-                else
+                else{
                     toastr.error("Email is taken!", "Error");
+                    return false;
+                }
+                    
             }
+            alert();
             return false;
         });
         
