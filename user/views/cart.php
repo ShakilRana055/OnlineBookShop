@@ -73,6 +73,13 @@
                                 </td>
                                 <td></td>
                             </tr>
+                            <tr>
+                                <td colspan = "4">Delivery Date</td>
+                                 <td>
+                                    <input id = "deliveryDate" type = "date" class = 'form-control' />
+                                </td>
+                                <td></td>
+                            </tr>
                         </tfoot>
                     </table>
                 </div>   
@@ -103,6 +110,7 @@
             paymentMode: $("#paymentMode"),
             shoppingCartTable: $("#shoppingCartTable"),
             shoppingCartButton: $("#shoppingCartButton"),
+            deliveryDate: $("#deliveryDate"),
 
             quantityMinus: ".qty-minus",
             quantityPlus: ".qty-plus",
@@ -190,6 +198,7 @@
                     GrandTotal : Number(selector.grandTotal.text()),
                     SubTotal: Number(selector.subTotal.text()),
                     PaymentMode: selector.paymentMode.val(),
+                    DeliveryDate : selector.deliveryDate.val(),
                 };
                 let response = ajaxOperation.SavePostAjax("../controller/ShoppingCart.php", jsonData);
                 if(JSON.parse(response) === true){

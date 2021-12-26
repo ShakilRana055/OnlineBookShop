@@ -11,7 +11,7 @@ include("../../connection/DatabaseConnection.php");
     2 => 'Id',
     3 => 'SubTotal',
     4 => 'GrandTotal',
-    5 => 'Id',
+    5 => 'DeliveryDate',
     6 => 'Status',
     7 => 'Email',
  );

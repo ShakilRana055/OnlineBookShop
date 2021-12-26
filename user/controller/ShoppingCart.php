@@ -52,6 +52,7 @@ if(isset($_POST['confirmPurchase']))
     $grandTotal = $_POST['GrandTotal'];
     $subTotal = $_POST['SubTotal'];
     $paymentMode = $_POST['PaymentMode'];
+    $deliveryDate = $_POST['DeliveryDate'];
 
     $sql = "SELECT InvoiceNumber FROM invoice ORDER BY Id DESC LIMIT 1";
     $queryResult = mysqli_query($con, $sql);
@@ -66,8 +67,8 @@ if(isset($_POST['confirmPurchase']))
 
     // pushing into invoice 
     $pending = Status::Pending();
-    $invoiceInsert = "INSERT INTO `invoice`( `InvoiceNumber`, `UserId`, `InvoiceDate`, `GrandTotal`, `SubTotal`, `Discount`, `DeliveryCharge`, `PaymentMode`, `Status`, `CreatedDate`) 
-                        VALUES ('$invoiceNumber','$userId','$currentDate','$grandTotal','$subTotal',0,'$deliveryCharge','$paymentMode','$pending','$currentDate')";
+    $invoiceInsert = "INSERT INTO `invoice`( `InvoiceNumber`, `UserId`, `InvoiceDate`, `GrandTotal`, `SubTotal`, `Discount`, `DeliveryCharge`, `PaymentMode`, `Status`, `CreatedDate`, `DeliveryDate`) 
+                        VALUES ('$invoiceNumber','$userId','$currentDate','$grandTotal','$subTotal',0,'$deliveryCharge','$paymentMode','$pending','$currentDate', '$deliveryDate')";
     mysqli_query($con, $invoiceInsert);
     $lastId = mysqli_insert_id($con);
 

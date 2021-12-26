@@ -35,7 +35,7 @@
                             <th>Contact</th>
                             <th>Sub-Total</th>
                             <th>Grand-Total</th>
-                            <th>Date</th>
+                            <th>Delivery Date</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -114,7 +114,7 @@
                     },
                     { "data": "SubTotal", "name": "SubTotal", "autowidth": true, "orderable": true },
                     { "data": "GrandTotal", "name": "GrandTotal", "autowidth": true, "orderable": true },
-                    { "data": "InvoiceDate", "name": "OrderDate", "autowidth": true, "orderable": true },
+                    { "data": "DeliveryDate", "name": "DeliveryDate", "autowidth": true, "orderable": true },
                     { 
                         "render": function (data, type, full, meta) {
                             let className = '';
